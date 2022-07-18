@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/04/14 08:16:02 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/07/18 15:51:37 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ typedef struct s_args {
 	int	nb_time_eats;
 }				t_args;
 
-int			ft_atoi(char *nbr);
-int			check_args(int argc, char **argv);
-int			manage_glob(struct s_global *glo, int argc, char **argv);
+int			parse_args_and_fill_glo(	struct s_global *glo, \
+										int nb_args, \
+										char **args);
 
 /*			GENERAL & PHILOS	*/
 typedef struct s_philo {
@@ -58,18 +58,12 @@ typedef struct s_global {
 
 int			philo_manager(t_global *glo);
 
-inline static int	malloc_forks(t_philo *philo)
-{
-	philo->left_fork = (pthread_mutex_t *)malloc(sizeof(*philo->left_fork));
-	philo->right_fork = (pthread_mutex_t *)malloc(sizeof(*philo->right_fork));
-	if (!philo->left_fork || !philo->right_fork)
-		return (-1);
-	return (0);
-}
-
 /*			TIME MANAGEMENT		*/
 void		print_log(t_global glo, int id, char *action);
 long long	get_timestamp(void);
 long long	time_diff(long long t1, long long t2);
+
+/*			ERROR UTILS			*/
+int			print_error_and_return(char *error_msg);
 
 #endif

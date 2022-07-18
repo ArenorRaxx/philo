@@ -27,7 +27,6 @@ static int	init_philo(t_global *glo)
 		glo->philos[i].id = i + 1;
 		glo->philos[i].globvar = glo;
 		glo->philos[i].last_meal = 0;
-		malloc_forks(&glo->philos[i]);
 		glo->philos[i].left_fork = &glo->forks[i];
 		if (i == glo->args.nb_philosophers - 1)
 			glo->philos[i].right_fork = &glo->forks[0];
@@ -54,15 +53,15 @@ static void	philo_eats(t_philo *philo)
 	pthread_mutex_unlock(philo->right_fork);
 }
 
-
 static void	*philo_in_a_thread(void *arg)
 {
-	int			i = 0;
+	int			i;
 	t_philo		*philo;
 	t_global	*glo;
 
-	philo = (t_philo *)arg;
+	i = 0;
 	glo = philo->globvar;
+	philo = (t_philo *)arg;
 	while (i++ < 10)
 	{
 		philo_eats(philo);

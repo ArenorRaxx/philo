@@ -6,7 +6,7 @@
 #    By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/12 08:34:12 by mcorso            #+#    #+#              #
-#    Updated: 2022/04/13 09:42:53 by mcorso           ###   ########.fr        #
+#    Updated: 2022/07/18 15:43:07 by mcorso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ NAME			=	philo
 #	Source files
 SRC_FILES		=	args_manager.c \
 					log_manager.c \
-					parsing.c \
 					philo.c \
 					philo_manager.c
 
