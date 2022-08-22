@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   philo_actions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 10:40:14 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/22 13:20:16 by mcorso           ###   ########.fr       */
+/*   Created: 2022/08/01 10:50:19 by mcorso            #+#    #+#             */
+/*   Updated: 2022/08/01 11:56:55by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 #include <bits/pthreadtypes.h>
 #include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h>
 
-int	main(int argc, char **argv)
+int	sleep_logic(t_philo *philo, int sleep_time)
 {
-	int			i;
-	int			error;
-	t_global	glo;
-
-	i = 0;
-	error = catch_parsing_and_glo_error(&glo, argc, argv);
-	if (error != SUCCESS)
-		return (print_error_and_return(error));
-	error = catch_philo_init_and_threading_error(&glo);
-	if (error)
-		return (print_error_and_return(error));
-	while (glo.is_ded == 0)
-		;//Death Manager
-	while (i < glo.args.nb_philosophers)
-		pthread_join(glo.philos[i++].thread_id, NULL);
+	while (sleep_time--)
+	{
+		usleep(1000);
+		if (test_for_death(philo))
+			return (1);
+	}
 	return (0);
+}
+
+int	philo_sleeps_action(t_philo *philo, int time_to_sleep)
+{
+	int	sleep_return;
+
+	print_action_log(philo, SLEEPS_MSG);
+	sleep_return = sleep_logic(philo, time_to_sleep);
+	return (sleep_return);
 }

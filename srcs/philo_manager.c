@@ -14,82 +14,71 @@
 #include <pthread.h>
 #include <sys/time.h>
 
-static int	init_philo(t_global *glo)
+static t_philo	init_single_philo(int index, int number_of_philo, t_global *glo)
 {
-	int	i;
+	t_philo	philosopher;
+
+	philosopher.id = index + 1;
+	philosopher.globvar = glo;
+	philosopher.last_meal = 0;
+	philosopher.left_fork = &glo->forks[index];
+	if (index == number_of_philo - 1)
+		philosopher.right_fork = &glo->forks[0];
+	else
+		philosopher.right_fork = &glo->forks[index + 1];
+	return (philosopher);
+}
+
+static int	init_global_philo(t_global *glo)
+{
+	int		i;
+	int		number_of_philo;
+	t_philo	current_init_philo;
 
 	i = 0;
-	glo->philos = malloc(sizeof(*glo->philos) * glo->args.nb_philosophers);
+	number_of_philo = glo->args.nb_philosophers;
+	glo->philos = malloc(sizeof(*glo->philos) * number_of_philo);
 	if (!glo->philos)
 		return (-1);
-	while (i < glo->args.nb_philosophers)
+	while (i < number_of_philo)
 	{
-		glo->philos[i].id = i + 1;
-		glo->philos[i].globvar = glo;
-		glo->philos[i].last_meal = 0;
-		glo->philos[i].left_fork = &glo->forks[i];
-		if (i == glo->args.nb_philosophers - 1)
-			glo->philos[i].right_fork = &glo->forks[0];
-		else
-			glo->philos[i].right_fork = &glo->forks[i + 1];
+		current_init_philo = init_single_philo(i, number_of_philo, glo);
+		glo->philos[i] = current_init_philo;
 		i++;
 	}
 	return (0);
-}
-
-static void	philo_eats(t_philo *philo)
-{
-	t_global	*glo;
-
-	glo = philo->globvar;
-	pthread_mutex_lock(philo->left_fork);
-	print_log(*glo, philo->id, "has taken a fork");
-	pthread_mutex_lock(philo->right_fork);
-	print_log(*glo, philo->id, "has taken a fork");
-	print_log(*glo, philo->id, "is eating");
-	philo->last_meal = get_timestamp();
-	usleep(glo->args.time_to_eat);
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
 }
 
 static void	*philo_in_a_thread(void *arg)
 {
-	int			i;
-	t_philo		*philo;
 	t_global	*glo;
+	t_philo		*philo;
+	int			time_to_sleep;
 
-	i = 0;
-	glo = philo->globvar;
 	philo = (t_philo *)arg;
-	while (i++ < 10)
+	glo = philo->globvar;
+	time_to_sleep = glo->args.time_to_sleep;
+	while (!glo->is_ded)
 	{
-		philo_eats(philo);
-		print_log(*glo, philo->id, "is sleeping");
-		usleep(glo->args.time_to_sleep);
-		if (philo->last_meal - get_timestamp() > glo->args.time_to_die)
-			break ;
-		print_log(*glo, philo->id, "is thinking");
+		philo_eats_action(philo);
+		philo_sleeps_action(philo, time_to_sleep);
 	}
 	return (NULL);
 }
 
-int	philo_manager(t_global *glo)
+char	*catch_philo_init_and_threading_error(t_global *glo)
 {
 	int	i;
 
 	i = 0;
-	if (init_philo(glo) < 0)
-		return (-1);
+	if (init_global_philo(glo) < 0)
+		return (MALLOC_ERROR_MSG);
 	while (i < glo->args.nb_philosophers)
 	{
 		if (pthread_create(&glo->philos[i].thread_id, NULL, \
 			philo_in_a_thread, &glo->philos[i]) != 0)
-		{
-			printf("Echec de création du %i philo.\n", i - 1);
-			return (-1);
-		}
+			return ("Ptrhead creation error");
 		i++;
 	}
-	return (0);
+	return (NULL);
 }

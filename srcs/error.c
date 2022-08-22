@@ -6,14 +6,42 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:12:54 by mcorso            #+#    #+#             */
-/*   Updated: 2022/07/18 15:17:31 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/08/22 13:30:21 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+#include <stdio.h>
 
-int	print_error_and_return(char *error_msg)
+static void	print_error(const char *error_msg)
 {
 	printf("%s\n", error_msg);
+}
+
+static void	print_args_error(int errnum)
+{
+	print_error(PARSING_ERROR_MSG);
+	if (errnum == ENAN)
+		print_error(ENAN_MSG);
+	else if (errnum == EMAXINT)
+		print_error(EMAXINT_MSG);
+	else if (errnum == EINBARG)
+		print_error(EINBARG_MSG);
+}
+
+static void	print_general_error(int errnum)
+{
+	if (errnum == ENOMEM)
+		print_error(ENOMEM_MSG);
+	else if (errnum == EINVAL)
+		print_error(EINVAL_MSG);
+}
+
+int	print_error_and_return(int errnum)
+{
+	if (errnum < 0)
+		print_args_error(errnum);
+	else
+		print_general_error(errnum);
 	return (-1);
 }

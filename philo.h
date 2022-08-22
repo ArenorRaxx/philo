@@ -6,12 +6,39 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/07/18 15:51:37 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/08/22 13:21:44 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+
+# define PARSING_ERROR_MSG "Parsing error: "
+# define ENAN_MSG "Negative or not a number."
+# define EMAXINT_MSG "Equal or greater to max int."
+# define EINBARG_MSG "Invalid number of argument."
+# define ENOMEM_MSG "Not enough memory."
+# define EINVAL_MSG	"Invalid argument."
+
+/*		ERROR DEFINE			*/
+//	Args
+# define ENAN -3
+# define EMAXINT -2
+# define EINBARG -1
+//	General
+# define SUCCESS 0
+# define ENOMEM	12
+# define EINVAL 22
+
+# define LEFT_FORK 0
+# define RIGHT_FORK 1
+# define NB_FORK_PER_PHILO 2
+
+# define DIES_MSG "is ded."
+# define EATS_MSG "is eating."
+# define SLEEPS_MSG "is sleeping."
+# define THINKS_MSG "is thinking."
+# define TAKES_FORK_MSG "has taken a fork."
 
 # include <bits/types/struct_timeval.h>
 # include <stdio.h>
@@ -24,7 +51,7 @@
 
 struct	s_global;
 
-/*			PARSING & ARGS		*/
+/*			STRUCTS			*/
 typedef struct s_args {
 	int	nb_philosophers;
 	int	time_to_die;
@@ -33,11 +60,6 @@ typedef struct s_args {
 	int	nb_time_eats;
 }				t_args;
 
-int			parse_args_and_fill_glo(	struct s_global *glo, \
-										int nb_args, \
-										char **args);
-
-/*			GENERAL & PHILOS	*/
 typedef struct s_philo {
 	int				id;
 	long long		last_meal;
@@ -49,21 +71,44 @@ typedef struct s_philo {
 
 typedef struct s_global {
 	struct s_args	args;
-	pthread_mutex_t	*write;
+	pthread_mutex_t	write;
 	pthread_mutex_t	*forks;
 	long long		time_ref;
 	t_philo			*philos;
-
+	int				is_ded;
 }				t_global;
 
-int			philo_manager(t_global *glo);
+//_______________________________
+/*			INIT & PARSING		*/
+int			catch_philo_init_and_threading_error(t_global *glo);
+int			catch_parsing_and_glo_error(struct s_global *glo, \
+										int nb_args, \
+										char **args);
+//	Mutexes
+int			init_single_mutex(pthread_mutex_t mutex);
+int			init_multiple_mutexes(	int nb_of_mutexes, \
+									pthread_mutex_t *mutex_array);
+int			init_mutex_objects_of_glo(t_global *glo);
+//	Forks
+int			init_fork_objects(pthread_mutex_t *forks, int nb_of_forks);
 
+//_______________________________
+/*			PHILOS MANAGEMENT	*/
+int			philo_manager(t_global *glo);
+//	Actions
+int			test_for_death(t_philo *philo);
+int			philo_eats_action(t_philo *philo);
+int			sleep_logic(t_philo *philo, int sleep_time);
+int			philo_sleeps_action(t_philo *philo, int time_to_sleep);
+
+//_______________________________
 /*			TIME MANAGEMENT		*/
-void		print_log(t_global glo, int id, char *action);
+void		print_action_log(t_philo *philo, char *action);
 long long	get_timestamp(void);
 long long	time_diff(long long t1, long long t2);
 
+//_______________________________
 /*			ERROR UTILS			*/
-int			print_error_and_return(char *error_msg);
+int			print_error_and_return(int errnum);
 
 #endif
