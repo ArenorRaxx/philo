@@ -39,14 +39,14 @@ static int	init_global_philo(t_global *glo)
 	number_of_philo = glo->args.nb_philosophers;
 	glo->philos = malloc(sizeof(*glo->philos) * number_of_philo);
 	if (!glo->philos)
-		return (-1);
+		return (ENOMEM);
 	while (i < number_of_philo)
 	{
 		current_init_philo = init_single_philo(i, number_of_philo, glo);
 		glo->philos[i] = current_init_philo;
 		i++;
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 static void	*philo_in_a_thread(void *arg)
@@ -66,19 +66,24 @@ static void	*philo_in_a_thread(void *arg)
 	return (NULL);
 }
 
-char	*catch_philo_init_and_threading_error(t_global *glo)
+int	catch_philo_init_and_threading_error(t_global *glo)
 {
-	int	i;
+	int		i;
+	int		errnum;
+	t_philo	*philos;
 
 	i = 0;
-	if (init_global_philo(glo) < 0)
-		return (MALLOC_ERROR_MSG);
+	philos = glo->philos;
+	errnum = init_global_philo(glo);
+	if (errnum != SUCCESS)
+		return (errnum);
 	while (i < glo->args.nb_philosophers)
 	{
-		if (pthread_create(&glo->philos[i].thread_id, NULL, \
-			philo_in_a_thread, &glo->philos[i]) != 0)
-			return ("Ptrhead creation error");
+		errnum = pthread_create(&philos[i].thread_id, NULL, \
+								philo_in_a_thread, &philos[i]);
+		if (errnum != SUCCESS)
+			return (errnum);
 		i++;
 	}
-	return (NULL);
+	return (SUCCESS);
 }

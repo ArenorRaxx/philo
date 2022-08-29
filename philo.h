@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/22 13:21:44 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/08/29 11:15:16 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define ENAN_MSG "Negative or not a number."
 # define EMAXINT_MSG "Equal or greater to max int."
 # define EINBARG_MSG "Invalid number of argument."
+# define EAGAIN_MSG "Not enough ressources (probably from pthread_create)."
 # define ENOMEM_MSG "Not enough memory."
 # define EINVAL_MSG	"Invalid argument."
 
@@ -27,6 +28,7 @@
 # define EINBARG -1
 //	General
 # define SUCCESS 0
+# define EAGAIN 11
 # define ENOMEM	12
 # define EINVAL 22
 
