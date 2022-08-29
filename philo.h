@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/29 11:15:16 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/08/29 11:43:37 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 # define LEFT_FORK 0
 # define RIGHT_FORK 1
 # define NB_FORK_PER_PHILO 2
+
+# define NOT_DED 0
+# define DED 1
 
 # define DIES_MSG "is ded."
 # define EATS_MSG "is eating."
@@ -98,10 +101,12 @@ int			init_fork_objects(pthread_mutex_t *forks, int nb_of_forks);
 /*			PHILOS MANAGEMENT	*/
 int			philo_manager(t_global *glo);
 //	Actions
-int			test_for_death(t_philo *philo);
 int			philo_eats_action(t_philo *philo);
 int			sleep_logic(t_philo *philo, int sleep_time);
 int			philo_sleeps_action(t_philo *philo, int time_to_sleep);
+void		philo_thinks_action(t_philo *philo);
+//	Deth
+void		deth_manager(t_global *glo);
 
 //_______________________________
 /*			TIME MANAGEMENT		*/

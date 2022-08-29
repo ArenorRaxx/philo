@@ -17,13 +17,16 @@
 
 int	sleep_logic(t_philo *philo, int sleep_time)
 {
-	while (sleep_time--)
+	int	half_second_sleep_time;
+
+	half_second_sleep_time = sleep_time * 2;
+	while (half_second_sleep_time--)
 	{
-		usleep(1000);
-		if (test_for_death(philo))
-			return (1);
+		usleep(500);
+		if (philo->globvar->is_ded == 1)
+			return (DED);
 	}
-	return (0);
+	return (NOT_DED);
 }
 
 int	philo_sleeps_action(t_philo *philo, int time_to_sleep)

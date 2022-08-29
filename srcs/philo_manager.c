@@ -60,8 +60,11 @@ static void	*philo_in_a_thread(void *arg)
 	time_to_sleep = glo->args.time_to_sleep;
 	while (!glo->is_ded)
 	{
-		philo_eats_action(philo);
-		philo_sleeps_action(philo, time_to_sleep);
+		if (philo_eats_action(philo) == DED)
+			break ;
+		if (philo_sleeps_action(philo, time_to_sleep) == DED)
+			break ;
+		philo_thinks_action(philo);
 	}
 	return (NULL);
 }
