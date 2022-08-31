@@ -6,7 +6,7 @@
 #    By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/12 08:34:12 by mcorso            #+#    #+#              #
-#    Updated: 2022/08/22 13:32:50 by mcorso           ###   ########.fr        #
+#    Updated: 2022/08/29 11:45:29 by mcorso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			=	philo
 
 #	Source files
 SRC_FILES		=	args_manager.c \
-					death_manager.c \
+					deth_manager.c \
 					error.c \
 					fork_manager.c \
 					log_manager.c \
