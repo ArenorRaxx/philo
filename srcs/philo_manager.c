@@ -76,10 +76,10 @@ int	catch_philo_init_and_threading_error(t_global *glo)
 	t_philo	*philos;
 
 	i = 0;
-	philos = glo->philos;
 	errnum = init_global_philo(glo);
 	if (errnum != SUCCESS)
 		return (errnum);
+	philos = glo->philos;
 	while (i < glo->args.nb_philosophers)
 	{
 		errnum = pthread_create(&philos[i].thread_id, NULL, \

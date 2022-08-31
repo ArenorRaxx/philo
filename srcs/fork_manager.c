@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 11:48:43 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/22 12:51:37 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/08/31 15:19:11 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 static int	malloc_forks(pthread_mutex_t **forks, int nb_of_forks)
 {
-	int				errnum;
 	size_t			size_to_malloc;
 
 	size_to_malloc = sizeof(**forks) * nb_of_forks;
@@ -26,7 +25,7 @@ static int	malloc_forks(pthread_mutex_t **forks, int nb_of_forks)
 	return (SUCCESS);
 }
 
-static int	init_mutex_of_forks(pthread_mutex_t *forks, int nb_of_forks)
+static int	init_mutex_of_forks(pthread_mutex_t **forks, int nb_of_forks)
 {
 	int	errnum;
 
@@ -36,11 +35,11 @@ static int	init_mutex_of_forks(pthread_mutex_t *forks, int nb_of_forks)
 	return (SUCCESS);
 }
 
-int	init_fork_objects(pthread_mutex_t *forks, int nb_of_forks)
+int	init_fork_objects(pthread_mutex_t **forks, int nb_of_forks)
 {
 	int				errnum;
 
-	errnum = malloc_forks(&forks, nb_of_forks);
+	errnum = malloc_forks(forks, nb_of_forks);
 	if (errnum != SUCCESS)
 		return (errnum);
 	errnum = init_mutex_of_forks(forks, nb_of_forks);

@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/29 11:43:37 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/08/31 15:51:39 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ int			catch_parsing_and_glo_error(struct s_global *glo, \
 										int nb_args, \
 										char **args);
 //	Mutexes
-int			init_single_mutex(pthread_mutex_t mutex);
+int			init_single_mutex(pthread_mutex_t *mutex);
 int			init_multiple_mutexes(	int nb_of_mutexes, \
-									pthread_mutex_t *mutex_array);
+									pthread_mutex_t **mutex_array);
 int			init_mutex_objects_of_glo(t_global *glo);
 //	Forks
-int			init_fork_objects(pthread_mutex_t *forks, int nb_of_forks);
+int			init_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
 
 //_______________________________
 /*			PHILOS MANAGEMENT	*/
