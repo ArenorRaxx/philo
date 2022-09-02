@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/29 11:25:07 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/02 13:19:15 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static int	philo_takes_forks_action(t_philo *philo)
 		errnum = philo_takes_single_fork(&forks[i]);
 		if (errnum != SUCCESS)
 			return (errnum);
+		if (philo->globvar->is_ded == DED)
+			return (DED);
 		print_action_log(philo, TAKES_FORK_MSG);
 		i++;
 	}
@@ -67,6 +69,8 @@ static int	philo_drops_forks(t_philo *philo)
 		errnum = philo_drops_single_fork(&forks[i]);
 		if (errnum != SUCCESS)
 			return (errnum);
+		if (philo->globvar->is_ded == DED)
+			return (DED);
 		i++;
 	}
 	return (SUCCESS);
@@ -81,8 +85,6 @@ int	philo_eats_action(t_philo *philo)
 	errnum = philo_takes_forks_action(philo);
 	if (errnum != SUCCESS)
 		return (errnum);
-	if (glo->is_ded == DED)
-		return (DED);
 	print_action_log(philo, EATS_MSG);
 	philo->last_meal = get_timestamp();
 	sleep_logic(philo, time_to_eat);

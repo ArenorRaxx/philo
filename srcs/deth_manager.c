@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   death_manager.c                                    :+:      :+:    :+:   */
+/*   deth_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:58:08 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/29 11:42:00 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/02 13:47:47 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	deth_manager(t_global *glo)
 	{
 		current_philo = philos[i];
 		philo_is_ded = check_for_ded_philo(current_philo, *glo);
-		if (philo_is_ded)
+		if (philo_is_ded == DED)
 		{
-			philo_dies_action(&current_philo);
 			glo->is_ded = 1;
+			philo_dies_action(&current_philo);
 		}
 	}
 }

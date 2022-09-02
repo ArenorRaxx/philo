@@ -20,7 +20,7 @@ static t_philo	init_single_philo(int index, int number_of_philo, t_global *glo)
 
 	philosopher.id = index + 1;
 	philosopher.globvar = glo;
-	philosopher.last_meal = 0;
+	philosopher.last_meal = get_timestamp();
 	philosopher.left_fork = &glo->forks[index];
 	if (index == number_of_philo - 1)
 		philosopher.right_fork = &glo->forks[0];
