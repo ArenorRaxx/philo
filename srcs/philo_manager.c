@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../philo.h"
+#include <bits/pthreadtypes.h>
 #include <pthread.h>
 #include <sys/time.h>
 
@@ -51,13 +52,19 @@ static int	init_global_philo(t_global *glo)
 
 static void	*philo_in_a_thread(void *arg)
 {
-	t_global	*glo;
-	t_philo		*philo;
-	int			time_to_sleep;
+	t_global		*glo;
+	t_philo			*philo;
+	int				time_to_sleep;
+	pthread_mutex_t	starter;
 
 	philo = (t_philo *)arg;
 	glo = philo->globvar;
+	starter = glo->starter;
 	time_to_sleep = glo->args.time_to_sleep;
+	pthread_mutex_lock(&starter);
+	pthread_mutex_unlock(&starter);
+	if (philo->id % 2 == 0)
+		sleep_logic(philo, 1);
 	while (!glo->is_ded)
 	{
 		if (philo_eats_action(philo) == DED)

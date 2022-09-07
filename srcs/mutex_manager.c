@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:57:15 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/31 16:05:59 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/03 10:53:49 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	init_mutex_objects_of_glo(t_global *glo)
 	int				nb_of_forks;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*write;
+	pthread_mutex_t	*starter;
 
 	nb_of_forks = glo->args.nb_philosophers;
 	forks = &glo->forks;
@@ -56,6 +57,10 @@ int	init_mutex_objects_of_glo(t_global *glo)
 		return (errnum);
 	write = &glo->write;
 	errnum = init_single_mutex(write);
+	if (errnum != SUCCESS)
+		return (errnum);
+	starter = &glo->starter;
+	errnum = init_single_mutex(starter);
 	if (errnum != SUCCESS)
 		return (errnum);
 	return (SUCCESS);
