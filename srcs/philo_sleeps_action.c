@@ -17,12 +17,9 @@
 
 int	sleep_logic(t_philo *philo, int sleep_time)
 {
-	int	half_second_sleep_time;
-
-	half_second_sleep_time = sleep_time * 2;
-	while (half_second_sleep_time--)
+	while (sleep_time--)
 	{
-		usleep(500);
+		usleep(1000);
 		if (philo->globvar->is_ded == 1)
 			return (DED);
 	}
