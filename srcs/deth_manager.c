@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:58:08 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/02 13:47:47 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/07 12:17:49 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,6 @@
 static void	philo_dies_action(t_philo *philo)
 {
 	print_action_log(philo, DIES_MSG);
-}
-
-static int	check_for_ded_philo(t_philo philo, t_global glo)
-{
-	int			time_to_die;
-	long long	current_timestamp;
-	long long	last_meal_timestamp;
-	long long	time_since_philo_ate;
-
-	time_to_die = glo.args.time_to_die;
-	current_timestamp = get_timestamp();
-	last_meal_timestamp = philo.last_meal;
-	time_since_philo_ate = time_diff(last_meal_timestamp, current_timestamp);
-	if (time_since_philo_ate > time_to_die)
-		return (DED);
-	return (NOT_DED);
 }
 
 void	deth_manager(t_global *glo)

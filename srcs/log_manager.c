@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 19:45:04 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/22 12:27:48 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/07 12:05:51 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,15 @@ void	print_action_log(t_philo *philo, char *action)
 {
 	const t_global	glo = *philo->globvar;
 	const int		philo_id = philo->id;
-	long long		time_difference;
+	long long		delta_time_since_start;
 	long long		time_at_t;
 	pthread_mutex_t	write;
 
 	write = glo.write;
 	time_at_t = get_timestamp();
-	time_difference = time_diff(glo.time_ref, time_at_t);
+	delta_time_since_start = time_diff(glo.time_ref, time_at_t);
 	pthread_mutex_lock(&write);
-	printf("%lli ", time_difference);
-	printf("%i ", philo_id);
-	printf("%s\n", action);
+	printf("%lli %i %s\n", delta_time_since_start, philo_id, action);
 	pthread_mutex_unlock(&write);
 	return ;
 }

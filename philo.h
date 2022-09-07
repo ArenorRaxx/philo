@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/31 15:51:39 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/07 12:19:35 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_philo {
 typedef struct s_global {
 	struct s_args	args;
 	pthread_mutex_t	write;
+	pthread_mutex_t	starter;
 	pthread_mutex_t	*forks;
 	long long		time_ref;
 	t_philo			*philos;
@@ -117,5 +118,22 @@ long long	time_diff(long long t1, long long t2);
 //_______________________________
 /*			ERROR UTILS			*/
 int			print_error_and_return(int errnum);
+
+
+inline static int	check_for_ded_philo(t_philo philo, t_global glo)
+{
+	int			time_to_die;
+	long long	current_timestamp;
+	long long	last_meal_timestamp;
+	long long	time_since_philo_ate;
+
+	time_to_die = glo.args.time_to_die;
+	current_timestamp = get_timestamp();
+	last_meal_timestamp = philo.last_meal;
+	time_since_philo_ate = time_diff(last_meal_timestamp, current_timestamp);
+	if (time_since_philo_ate > time_to_die)
+		return (DED);
+	return (NOT_DED);
+}
 
 #endif
