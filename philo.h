@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/07 12:19:35 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/07 17:21:47 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_global {
 
 //_______________________________
 /*			INIT & PARSING		*/
+/////////////////////////////////
 int			catch_philo_init_and_threading_error(t_global *glo);
 int			catch_parsing_and_glo_error(struct s_global *glo, \
 										int nb_args, \
@@ -100,23 +101,29 @@ int			init_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
 
 //_______________________________
 /*			PHILOS MANAGEMENT	*/
+/////////////////////////////////
 int			philo_manager(t_global *glo);
-//	Actions
+//	Eat
 int			philo_eats_action(t_philo *philo);
-int			sleep_logic(t_philo *philo, int sleep_time);
-int			philo_sleeps_action(t_philo *philo, int time_to_sleep);
+//	Sleep
+void		sleep_logic(int sleep_time);
+void		philo_sleeps_action(t_philo *philo, int time_to_sleep);
+//	Think
 void		philo_thinks_action(t_philo *philo);
 //	Deth
 void		deth_manager(t_global *glo);
 
 //_______________________________
-/*			TIME MANAGEMENT		*/
+/*			LOG MANAGEMENT		*/
+/////////////////////////////////
 void		print_action_log(t_philo *philo, char *action);
+//	Time
 long long	get_timestamp(void);
 long long	time_diff(long long t1, long long t2);
 
 //_______________________________
 /*			ERROR UTILS			*/
+/////////////////////////////////
 int			print_error_and_return(int errnum);
 
 

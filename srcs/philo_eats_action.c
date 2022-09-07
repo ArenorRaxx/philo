@@ -6,13 +6,14 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/07 12:19:32 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/07 17:21:54 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 #include <pthread.h>
 #include <stdio.h>
+#include <unistd.h>
 
 static int	philo_takes_single_fork(pthread_mutex_t *fork)
 {
@@ -78,18 +79,17 @@ static int	philo_drops_forks(t_philo *philo)
 int	philo_eats_action(t_philo *philo)
 {
 	int				errnum;
-	int				is_ded;
 	const t_global	*glo = philo->globvar;
 	const int		time_to_eat = glo->args.time_to_eat;
 
 	errnum = philo_takes_forks_action(philo);
 	if (errnum != SUCCESS)
 		return (errnum);
+	if (glo->is_ded == DED)
+		return (DED);
 	print_action_log(philo, EATS_MSG);
 	philo->last_meal = get_timestamp();
-	is_ded = sleep_logic(philo, time_to_eat);
-	if (is_ded == DED)
-		return (DED);
+	sleep_logic(time_to_eat);
 	errnum = philo_drops_forks(philo);
 	if (errnum != SUCCESS)
 		return (errnum);

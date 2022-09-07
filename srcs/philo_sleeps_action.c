@@ -15,22 +15,13 @@
 #include <pthread.h>
 #include <unistd.h>
 
-int	sleep_logic(t_philo *philo, int sleep_time)
+void	sleep_logic(int sleep_time)
 {
-	while (sleep_time--)
-	{
-		usleep(1000);
-		if (philo->globvar->is_ded == 1)
-			return (DED);
-	}
-	return (NOT_DED);
+	usleep(sleep_time * 1000);
 }
 
-int	philo_sleeps_action(t_philo *philo, int time_to_sleep)
+void	philo_sleeps_action(t_philo *philo, int time_to_sleep)
 {
-	int	sleep_return;
-
 	print_action_log(philo, SLEEPS_MSG);
-	sleep_return = sleep_logic(philo, time_to_sleep);
-	return (sleep_return);
+	sleep_logic(time_to_sleep);
 }

@@ -64,12 +64,15 @@ static void	*philo_in_a_thread(void *arg)
 	pthread_mutex_lock(&starter);
 	pthread_mutex_unlock(&starter);
 	if (philo->id % 2 == 0)
-		sleep_logic(philo, 1);
+		usleep(1000);
 	while (!glo->is_ded)
 	{
 		if (philo_eats_action(philo) == DED)
 			break ;
-		if (philo_sleeps_action(philo, time_to_sleep) == DED)
+		if (glo->is_ded == DED)
+			break ;
+		philo_sleeps_action(philo, time_to_sleep);
+		if (glo->is_ded == DED)
 			break ;
 		philo_thinks_action(philo);
 	}
