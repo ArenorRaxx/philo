@@ -6,7 +6,7 @@
 #    By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/12 08:34:12 by mcorso            #+#    #+#              #
-#    Updated: 2022/08/29 11:45:29 by mcorso           ###   ########.fr        #
+#    Updated: 2022/09/20 15:35:20 by mcorso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ OBJ_DIR			=	./objs/
 #	Compiler
 CC				=	gcc
 CFLAGS			=	-Wall -Werror -Wextra
+INC_THREAD		=	-lpthread
 
 all				:	obj $(NAME)
 
@@ -46,7 +47,7 @@ $(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
 					$(CC) $(CFLAGS) -I$(HEAD) -o $@ -c $<
 
 $(NAME)			:	$(OBJS)
-					$(CC) $(OBJS) -o $(NAME)
+					$(CC) $(OBJS) -o $(NAME) $(INC_THREAD)
 
 clean			:	
 					rm -rf $(OBJ_DIR)
