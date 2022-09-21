@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/07 17:21:54 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:52:24 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,13 @@ static int	philo_takes_forks_action(t_philo *philo)
 		errnum = philo_takes_single_fork(forks[i]);
 		if (errnum != SUCCESS)
 			return (errnum);
-		if (philo->globvar->is_ded == DED)
+		if (philo->globvar->is_ded == DED )
+		{
+			if (i == 1)
+				philo_drops_single_fork(forks[1]);
+			philo_drops_single_fork(forks[0]);
 			return (DED);
+		}
 		print_action_log(philo, TAKES_FORK_MSG);
 		i++;
 	}
@@ -82,13 +87,16 @@ int	philo_eats_action(t_philo *philo)
 	const t_global	*glo = philo->globvar;
 	const int		time_to_eat = glo->args.time_to_eat;
 
+	philo->state = 1;
 	errnum = philo_takes_forks_action(philo);
 	if (errnum != SUCCESS)
 		return (errnum);
 	if (glo->is_ded == DED)
 		return (DED);
 	print_action_log(philo, EATS_MSG);
+	pthread_mutex_lock(&philo->data_access);
 	philo->last_meal = get_timestamp();
+	pthread_mutex_lock(&philo->data_access);
 	sleep_logic(time_to_eat);
 	errnum = philo_drops_forks(philo);
 	if (errnum != SUCCESS)

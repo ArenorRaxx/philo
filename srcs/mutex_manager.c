@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:57:15 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/03 10:53:49 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:51:13 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ int	init_multiple_mutexes(int nb_of_mutexes, pthread_mutex_t **mutex_array)
 int	init_mutex_objects_of_glo(t_global *glo)
 {
 	int				errnum;
-	int				nb_of_forks;
+	int				nb_of_philo;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*write;
 	pthread_mutex_t	*starter;
 
-	nb_of_forks = glo->args.nb_philosophers;
+	nb_of_philo = glo->args.nb_philosophers;
 	forks = &glo->forks;
-	errnum = init_fork_objects(forks, nb_of_forks);
+	errnum = init_fork_objects(forks, nb_of_philo);
 	if (errnum != SUCCESS)
 		return (errnum);
 	write = &glo->write;

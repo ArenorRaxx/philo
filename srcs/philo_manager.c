@@ -20,7 +20,9 @@ static t_philo	init_single_philo(int index, int number_of_philo, t_global *glo)
 	t_philo	philosopher;
 
 	philosopher.id = index + 1;
+	philosopher.state = 0;
 	philosopher.globvar = glo;
+	init_single_mutex(&philosopher.data_access);
 	philosopher.last_meal = get_timestamp();
 	philosopher.left_fork = &glo->forks[index];
 	if (index == number_of_philo - 1)
@@ -69,10 +71,9 @@ static void	*philo_in_a_thread(void *arg)
 	{
 		if (philo_eats_action(philo) == DED)
 			break ;
-		if (glo->is_ded == DED)
+		if (philo_sleeps_action(philo, time_to_sleep) == DED)
 			break ;
-		philo_sleeps_action(philo, time_to_sleep);
-		if (glo->is_ded == DED)
+		if (glo->is_ded)
 			break ;
 		philo_thinks_action(philo);
 	}

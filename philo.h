@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/07 17:21:47 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:41:47 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ typedef struct s_args {
 
 typedef struct s_philo {
 	int				id;
+	int				state;
 	long long		last_meal;
 	pthread_t		thread_id;
+	pthread_mutex_t	data_access;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	struct s_global	*globvar;
@@ -98,6 +100,7 @@ int			init_multiple_mutexes(	int nb_of_mutexes, \
 int			init_mutex_objects_of_glo(t_global *glo);
 //	Forks
 int			init_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
+void		free_forks(pthread_mutex_t **forks);
 
 //_______________________________
 /*			PHILOS MANAGEMENT	*/
@@ -107,11 +110,11 @@ int			philo_manager(t_global *glo);
 int			philo_eats_action(t_philo *philo);
 //	Sleep
 void		sleep_logic(int sleep_time);
-void		philo_sleeps_action(t_philo *philo, int time_to_sleep);
+int			philo_sleeps_action(t_philo *philo, int time_to_sleep);
 //	Think
 void		philo_thinks_action(t_philo *philo);
 //	Deth
-void		deth_manager(t_global *glo);
+void		deth_manager(t_global *glo, int nb_of_philo_to_test, t_philo *philos);
 
 //_______________________________
 /*			LOG MANAGEMENT		*/
@@ -125,22 +128,5 @@ long long	time_diff(long long t1, long long t2);
 /*			ERROR UTILS			*/
 /////////////////////////////////
 int			print_error_and_return(int errnum);
-
-
-inline static int	check_for_ded_philo(t_philo philo, t_global glo)
-{
-	int			time_to_die;
-	long long	current_timestamp;
-	long long	last_meal_timestamp;
-	long long	time_since_philo_ate;
-
-	time_to_die = glo.args.time_to_die;
-	current_timestamp = get_timestamp();
-	last_meal_timestamp = philo.last_meal;
-	time_since_philo_ate = time_diff(last_meal_timestamp, current_timestamp);
-	if (time_since_philo_ate > time_to_die)
-		return (DED);
-	return (NOT_DED);
-}
 
 #endif
