@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 10:52:24 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 11:17:02 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,17 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static int	philo_takes_single_fork(pthread_mutex_t *fork)
+static int	update_philo_last_meal(t_philo *philo)
 {
-	int	errnum;
+	int	error;
 
-	errnum = pthread_mutex_lock(fork);
-	if (errnum != SUCCESS)
-		return (errnum);
-	return (SUCCESS);
-}
-
-static int	philo_drops_single_fork(pthread_mutex_t *fork)
-{
-	int	errnum;
-
-	errnum = pthread_mutex_unlock(fork);
-	if (errnum != SUCCESS)
-		return (errnum);
+	error = pthread_mutex_lock(&philo->data_access);
+	if (error != SUCCESS)
+		return (error);
+	philo->last_meal = get_timestamp();
+	error = pthread_mutex_unlock(&philo->data_access);
+	if (error != SUCCESS)
+		return (error);
 	return (SUCCESS);
 }
 

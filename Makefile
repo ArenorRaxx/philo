@@ -6,7 +6,7 @@
 #    By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/12 08:34:12 by mcorso            #+#    #+#              #
-#    Updated: 2022/09/20 15:35:20 by mcorso           ###   ########.fr        #
+#    Updated: 2022/09/22 11:21:22 by mcorso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_FILES		=	args_manager.c \
 					philo_manager.c \
 					philo_sleeps_action.c \
 					philo_thinks_action.c\
+					philo_thread_loop.c \
 					philo.c
 
 SRCS			=	$(addprefix $(SRC_DIR), $(SRC_FILES))

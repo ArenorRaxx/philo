@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 10:51:41 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 11:46:10 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ typedef struct s_philo {
 typedef struct s_global {
 	struct s_args	args;
 	pthread_mutex_t	write;
-	pthread_mutex_t	starter;
 	pthread_mutex_t	*forks;
 	long long		time_ref;
 	t_philo			*philos;
@@ -106,8 +105,8 @@ void		free_forks(pthread_mutex_t **forks);
 /*			PHILOS MANAGEMENT	*/
 /////////////////////////////////
 int			philo_manager(t_global *glo);
+void		*philo_in_a_thread(void *arg);
 //	Eat
-int			update_philo_last_meal(t_philo *philo);
 int			philo_eats_action(t_philo *philo);
 //	Sleep
 void		sleep_logic(int sleep_time);
@@ -129,5 +128,45 @@ long long	time_diff(long long t1, long long t2);
 /*			ERROR UTILS			*/
 /////////////////////////////////
 int			print_error_and_return(int errnum);
+
+
+static inline t_philo	init_single_philo(int index, int number_of_philo, t_global *glo)
+{
+	t_philo	philosopher;
+
+	philosopher.id = index + 1;
+	philosopher.state = 0;
+	philosopher.globvar = glo;
+	init_single_mutex(&philosopher.data_access);
+	philosopher.last_meal = get_timestamp();
+	philosopher.left_fork = &glo->forks[index];
+	if (index == number_of_philo - 1)
+		philosopher.right_fork = &glo->forks[0];
+	else
+		philosopher.right_fork = &glo->forks[index + 1];
+	return (philosopher);
+}
+
+static inline int	philo_takes_single_fork(pthread_mutex_t *fork)
+{
+	int	errnum;
+
+	errnum = pthread_mutex_lock(fork);
+	if (errnum != SUCCESS)
+		return (errnum);
+	return (SUCCESS);
+}
+
+static inline int	philo_drops_single_fork(pthread_mutex_t *fork)
+{
+	int	errnum;
+
+	errnum = pthread_mutex_unlock(fork);
+	if (errnum != SUCCESS)
+		return (errnum);
+	return (SUCCESS);
+}
+
+
 
 #endif
