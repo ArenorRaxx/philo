@@ -84,6 +84,7 @@ static int	catch_synchroneous_thread_creation_error(t_global *glo)
 	errnum = create_and_synchro_lock_threads(nb_of_philos, &philos, &start);
 	if (errnum != SUCCESS)
 		return (errnum);
+	glo->time_ref = get_timestamp();
 	errnum = unlock_synchro_threads(nb_of_philos, &start);
 	return (errnum);
 }
