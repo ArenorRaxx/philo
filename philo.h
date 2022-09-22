@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/21 15:41:47 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 10:51:41 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void		free_forks(pthread_mutex_t **forks);
 /////////////////////////////////
 int			philo_manager(t_global *glo);
 //	Eat
+int			update_philo_last_meal(t_philo *philo);
 int			philo_eats_action(t_philo *philo);
 //	Sleep
 void		sleep_logic(int sleep_time);

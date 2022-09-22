@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/21 15:52:24 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 10:52:24 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ int	philo_eats_action(t_philo *philo)
 	if (glo->is_ded == DED)
 		return (DED);
 	print_action_log(philo, EATS_MSG);
-	pthread_mutex_lock(&philo->data_access);
-	philo->last_meal = get_timestamp();
-	pthread_mutex_lock(&philo->data_access);
+	errnum = update_philo_last_meal(philo);
+	if (errnum != SUCCESS)
+		return (errnum);
 	sleep_logic(time_to_eat);
 	errnum = philo_drops_forks(philo);
 	if (errnum != SUCCESS)

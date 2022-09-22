@@ -66,7 +66,7 @@ static void	*philo_in_a_thread(void *arg)
 	pthread_mutex_lock(&starter);
 	pthread_mutex_unlock(&starter);
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		usleep(100);
 	while (!glo->is_ded)
 	{
 		if (philo_eats_action(philo) == DED)
@@ -78,6 +78,20 @@ static void	*philo_in_a_thread(void *arg)
 		philo_thinks_action(philo);
 	}
 	return (NULL);
+}
+
+int	update_philo_last_meal(t_philo *philo)
+{
+	int	error;
+
+	error = pthread_mutex_lock(&philo->data_access);
+	if (error != SUCCESS)
+		return (error);
+	philo->last_meal = get_timestamp();
+	error = pthread_mutex_unlock(&philo->data_access);
+	if (error != SUCCESS)
+		return (error);
+	return (SUCCESS);
 }
 
 int	catch_philo_init_and_threading_error(t_global *glo)
