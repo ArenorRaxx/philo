@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:40:14 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/21 15:42:20 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 11:26:59 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,14 @@
 static int	launch_philo_project(t_global *glo, int argc, char **argv)
 {
 	int				error;
-	pthread_mutex_t	starter;
 
 	error = catch_parsing_and_glo_error(glo, argc, argv);
 	if (error != SUCCESS)
 		return (print_error_and_return(error));
-	starter = glo->starter;
-	pthread_mutex_lock(&starter);
 	error = catch_philo_init_and_threading_error(glo);
 	if (error != SUCCESS)
 		return (print_error_and_return(error));
-	pthread_mutex_unlock(&starter);
-	return (0);
+	return (SUCCESS);
 }
 
 int	main(int argc, char **argv)
