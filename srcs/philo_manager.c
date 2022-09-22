@@ -47,7 +47,7 @@ static int	create_and_synchro_lock_threads(int nb_of_philos, t_philo **philos, p
 								philo_in_a_thread, &(*philos)[i]);
 		if (errnum != SUCCESS)
 			return (errnum);
-		errnum = pthread_mutex_lock((*start)[i]);
+		errnum = pthread_mutex_lock(&(*start)[i]);
 		if (errnum != SUCCESS)
 			return (errnum);
 		i++;
@@ -63,7 +63,7 @@ static int	unlock_synchro_threads(int nb_of_philos, pthread_mutex_t **start)
 	i = 0;
 	while (i < nb_of_philos)
 	{
-		errnum = pthread_mutex_unlock((*start)[i]);
+		errnum = pthread_mutex_unlock(&(*start)[i]);
 		if (errnum != SUCCESS)
 			return (errnum);
 		i++;
@@ -73,16 +73,18 @@ static int	unlock_synchro_threads(int nb_of_philos, pthread_mutex_t **start)
 
 static int	catch_synchroneous_thread_creation_error(t_global *glo)
 {
-	int		errnum;
-	int		nb_of_philos;
-	t_philo	*philos;
+	int				errnum;
+	int				nb_of_philos;
+	t_philo			*philos;
+	pthread_mutex_t	*start;
 
 	nb_of_philos = glo->args.nb_philosophers;
 	philos = glo->philos;
-	errnum = create_and_synchro_lock_threads(nb_of_philos, &philos);
+	start = glo->start;
+	errnum = create_and_synchro_lock_threads(nb_of_philos, &philos, &start);
 	if (errnum != SUCCESS)
 		return (errnum);
-	errnum = unlock_synchro_threads(nb_of_philos, &philos);
+	errnum = unlock_synchro_threads(nb_of_philos, &start);
 	return (errnum);
 }
 

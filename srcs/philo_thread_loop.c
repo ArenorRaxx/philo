@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 11:03:11 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 11:48:52 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 15:23:51 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	synchroneous_start(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data_access);
-	pthread_mutex_unlock(&philo->data_access);
+	pthread_mutex_lock(philo->start);
+	pthread_mutex_unlock(philo->start);
 }
 
 void	*philo_in_a_thread(void *arg)

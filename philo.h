@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 14:57:50 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 15:20:22 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ int			init_mutex_objects_of_glo(t_global *glo);
 //	Forks
 int			init_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
 void		free_forks(pthread_mutex_t **forks);
+//	Staters
+void	free_start(pthread_mutex_t **start);
+int		init_start_objects(pthread_mutex_t **start, int nb_of_philo_to_start);
 
 //_______________________________
 /*			PHILOS MANAGEMENT	*/
@@ -139,13 +142,14 @@ static inline t_philo	init_single_philo(int index, int number_of_philo, t_global
 	philosopher.id = index + 1;
 	philosopher.state = 0;
 	philosopher.globvar = glo;
-	init_single_mutex(&philosopher.data_access);
 	philosopher.last_meal = get_timestamp();
+	init_single_mutex(&philosopher.data_access);
 	philosopher.left_fork = &glo->forks[index];
 	if (index == number_of_philo - 1)
 		philosopher.right_fork = &glo->forks[0];
 	else
 		philosopher.right_fork = &glo->forks[index + 1];
+	philosopher.start = &glo->start[index];
 	return (philosopher);
 }
 
