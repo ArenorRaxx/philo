@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 11:48:43 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/21 15:40:58 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 15:09:43 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ static int	init_mutex_of_forks(pthread_mutex_t **forks, int nb_of_forks)
 	int	errnum;
 
 	errnum = init_multiple_mutexes(nb_of_forks, forks);
-	if (errnum)
-		return (errnum);
-	return (SUCCESS);
+	return (errnum);
 }
 
 void	free_forks(pthread_mutex_t **forks)
@@ -48,7 +46,5 @@ int	init_fork_objects(pthread_mutex_t **forks, int nb_of_forks)
 	if (errnum != SUCCESS)
 		return (errnum);
 	errnum = init_mutex_of_forks(forks, nb_of_forks);
-	if (errnum != SUCCESS)
-		return (errnum);
-	return (SUCCESS);
+	return (errnum);
 }

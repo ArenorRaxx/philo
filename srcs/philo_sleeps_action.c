@@ -27,7 +27,5 @@ int	philo_sleeps_action(t_philo *philo, int time_to_sleep)
 		return (DED);
 	print_action_log(philo, SLEEPS_MSG);
 	sleep_logic(time_to_sleep);
-	if (philo->globvar->is_ded == DED)
-		return (DED);
-	return (NOT_DED);
+	return (philo->globvar->is_ded);
 }

@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 11:17:02 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 15:08:54 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ static int	update_philo_last_meal(t_philo *philo)
 		return (error);
 	philo->last_meal = get_timestamp();
 	error = pthread_mutex_unlock(&philo->data_access);
-	if (error != SUCCESS)
-		return (error);
-	return (SUCCESS);
+	return (error);
 }
 
 static int	philo_takes_forks_action(t_philo *philo)
@@ -69,10 +67,10 @@ static int	philo_drops_forks(t_philo *philo)
 	{
 		errnum = philo_drops_single_fork(forks[i]);
 		if (errnum != SUCCESS)
-			return (errnum);
+			break ;
 		i++;
 	}
-	return (SUCCESS);
+	return (errnum);
 }
 
 int	philo_eats_action(t_philo *philo)
@@ -93,7 +91,5 @@ int	philo_eats_action(t_philo *philo)
 		return (errnum);
 	sleep_logic(time_to_eat);
 	errnum = philo_drops_forks(philo);
-	if (errnum != SUCCESS)
-		return (errnum);
-	return (SUCCESS);
+	return (errnum);
 }

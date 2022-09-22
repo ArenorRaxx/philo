@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:32:50 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/22 13:31:19 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 15:05:39 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static int	check_args_validity(int argc, char **argv)
 	{
 		errnum = check_number(argv[i]);
 		if (errnum != SUCCESS)
-			return (errnum);
+			break ;
 	}
-	return (SUCCESS);
+	return (errnum);
 }
 
 static int	fill_glo_variable(t_global *glo, int argc, char **argv)
@@ -95,7 +95,5 @@ int	catch_parsing_and_glo_error(t_global *glo, int nb_args, char **args)
 	if (errnum != SUCCESS)
 		return (errnum);
 	errnum = fill_glo_variable(glo, nb_args, args);
-	if (errnum != SUCCESS)
-		return (errnum);
-	return (SUCCESS);
+	return (errnum);
 }

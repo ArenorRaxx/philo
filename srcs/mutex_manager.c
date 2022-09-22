@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:57:15 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 11:23:03 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 15:09:15 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	init_single_mutex(pthread_mutex_t *mutex)
 	int	errnum;
 
 	errnum = pthread_mutex_init(mutex, NULL);
-	if (errnum != SUCCESS)
-		return (errnum);
-	return (SUCCESS);
+	return (errnum);
 }
 
 int	init_multiple_mutexes(int nb_of_mutexes, pthread_mutex_t **mutex_array)
@@ -56,7 +54,5 @@ int	init_mutex_objects_of_glo(t_global *glo)
 		return (errnum);
 	write = &glo->write;
 	errnum = init_single_mutex(write);
-	if (errnum != SUCCESS)
-		return (errnum);
-	return (SUCCESS);
+	return (errnum);
 }

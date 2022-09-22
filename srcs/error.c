@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:12:54 by mcorso            #+#    #+#             */
-/*   Updated: 2022/08/22 13:30:21 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 15:06:34 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ static void	print_general_error(int errnum)
 
 int	print_error_and_return(int errnum)
 {
-	if (errnum < 0)
+	if (errnum == SUCCESS)
+		return (SUCCESS);
+	else if (errnum < 0)
 		print_args_error(errnum);
 	else
 		print_general_error(errnum);

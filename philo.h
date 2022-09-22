@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 11:46:10 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 14:57:50 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_philo {
 	long long		last_meal;
 	pthread_t		thread_id;
 	pthread_mutex_t	data_access;
+	pthread_mutex_t	*start;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	struct s_global	*globvar;
@@ -80,6 +81,7 @@ typedef struct s_global {
 	struct s_args	args;
 	pthread_mutex_t	write;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	*start;
 	long long		time_ref;
 	t_philo			*philos;
 	int				is_ded;

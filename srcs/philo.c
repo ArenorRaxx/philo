@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:40:14 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 11:26:59 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/22 15:06:55 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ static int	launch_philo_project(t_global *glo, int argc, char **argv)
 	if (error != SUCCESS)
 		return (print_error_and_return(error));
 	error = catch_philo_init_and_threading_error(glo);
-	if (error != SUCCESS)
-		return (print_error_and_return(error));
-	return (SUCCESS);
+	return (print_error_and_return(error));
 }
 
 int	main(int argc, char **argv)
@@ -43,5 +41,5 @@ int	main(int argc, char **argv)
 		pthread_join(glo.philos[i++].thread_id, NULL);
 	free_forks(&glo.forks);
 	free(glo.philos);
-	return (0);
+	return (SUCCESS);
 }
