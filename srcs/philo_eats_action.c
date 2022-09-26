@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 15:08:54 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:30:03 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	philo_takes_forks_action(t_philo *philo)
 		errnum = philo_takes_single_fork(forks[i]);
 		if (errnum != SUCCESS)
 			return (errnum);
-		if (philo->globvar->is_ded == DED )
+		if (philo->globvar->is_ded == DED)
 		{
 			if (i == 1)
 				philo_drops_single_fork(forks[1]);
