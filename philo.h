@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/26 17:31:31 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:32:07 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,8 @@ long long	time_diff(long long t1, long long t2);
 int			print_error_and_return(int errnum);
 
 
-static inline t_philo	init_single_philo(int index, int number_of_philo, t_global *glo)
+static inline t_philo	init_single_philo(	int index, int number_of_philo, \
+											t_global *glo)
 {
 	t_philo	philosopher;
 
