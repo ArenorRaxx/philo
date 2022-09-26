@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:32:50 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 15:34:28 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:35:12 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ static int	fill_glo_variable(t_global *glo, int argc, char **argv)
 	errnum = init_mutex_objects_of_glo(glo);
 	if (errnum != SUCCESS)
 		return (errnum);
-	//glo->time_ref = get_timestamp();
 	glo->is_ded = 0;
 	return (SUCCESS);
 }

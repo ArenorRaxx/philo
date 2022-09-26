@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/26 17:32:07 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:50:45 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ static inline t_philo	init_single_philo(	int index, int number_of_philo, \
 	philosopher.id = index + 1;
 	philosopher.state = 0;
 	philosopher.globvar = glo;
-	philosopher.last_meal = get_timestamp();
 	init_single_mutex(&philosopher.data_access);
 	philosopher.left_fork = &glo->forks[index];
 	if (index == number_of_philo - 1)
@@ -155,27 +154,5 @@ static inline t_philo	init_single_philo(	int index, int number_of_philo, \
 	philosopher.start = &glo->start[index];
 	return (philosopher);
 }
-
-static inline int	philo_takes_single_fork(pthread_mutex_t *fork)
-{
-	int	errnum;
-
-	errnum = pthread_mutex_lock(fork);
-	if (errnum != SUCCESS)
-		return (errnum);
-	return (SUCCESS);
-}
-
-static inline int	philo_drops_single_fork(pthread_mutex_t *fork)
-{
-	int	errnum;
-
-	errnum = pthread_mutex_unlock(fork);
-	if (errnum != SUCCESS)
-		return (errnum);
-	return (SUCCESS);
-}
-
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:58:08 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 15:20:35 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:54:56 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ static int	check_for_ded_philo(t_philo philo, t_global glo)
 	time_since_philo_ate = time_diff(last_meal_timestamp, current_timestamp);
 	pthread_mutex_unlock(&philo.data_access);
 	if (time_since_philo_ate > time_to_die)
+	{
+		printf("%lli\n", time_since_philo_ate);
 		return (DED);
+	}
 	return (NOT_DED);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/26 17:30:03 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/26 18:01:13 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ static int	philo_takes_forks_action(t_philo *philo)
 	forks[RIGHT_FORK] = philo->right_fork;
 	while (i < NB_FORK_PER_PHILO)
 	{
-		errnum = philo_takes_single_fork(forks[i]);
+		errnum = pthread_mutex_lock(forks[i]);
 		if (errnum != SUCCESS)
 			return (errnum);
 		if (philo->globvar->is_ded == DED)
 		{
+			pthread_mutex_unlock(forks[0]);
 			if (i == 1)
-				philo_drops_single_fork(forks[1]);
-			philo_drops_single_fork(forks[0]);
+				pthread_mutex_unlock(forks[1]);
 			return (DED);
 		}
 		print_action_log(philo, TAKES_FORK_MSG);
@@ -65,7 +65,7 @@ static int	philo_drops_forks(t_philo *philo)
 	forks[RIGHT_FORK] = philo->right_fork;
 	while (i < NB_FORK_PER_PHILO)
 	{
-		errnum = philo_drops_single_fork(forks[i]);
+		errnum = pthread_mutex_unlock(forks[i]);
 		if (errnum != SUCCESS)
 			break ;
 		i++;
@@ -84,7 +84,10 @@ int	philo_eats_action(t_philo *philo)
 	if (errnum != SUCCESS)
 		return (errnum);
 	if (glo->is_ded == DED)
+	{
+		philo_drops_forks(philo);
 		return (DED);
+	}
 	print_action_log(philo, EATS_MSG);
 	errnum = update_philo_last_meal(philo);
 	if (errnum != SUCCESS)
