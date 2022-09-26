@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 15:20:22 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:31:31 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,9 @@ int			init_mutex_objects_of_glo(t_global *glo);
 int			init_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
 void		free_forks(pthread_mutex_t **forks);
 //	Staters
-void	free_start(pthread_mutex_t **start);
-int		init_start_objects(pthread_mutex_t **start, int nb_of_philo_to_start);
+void		free_start(pthread_mutex_t **start);
+int			init_start_objects(	pthread_mutex_t **start, \
+								int nb_of_philo_to_start);
 
 //_______________________________
 /*			PHILOS MANAGEMENT	*/
@@ -119,7 +120,8 @@ int			philo_sleeps_action(t_philo *philo, int time_to_sleep);
 //	Think
 void		philo_thinks_action(t_philo *philo);
 //	Deth
-void		deth_manager(t_global *glo, int nb_of_philo_to_test, t_philo *philos);
+void		deth_manager(	t_global *glo, int nb_of_philo_to_test, \
+							t_philo *philos);
 
 //_______________________________
 /*			LOG MANAGEMENT		*/
