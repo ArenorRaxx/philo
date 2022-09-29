@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/26 17:50:45 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/29 15:20:05 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,12 @@
 # define RIGHT_FORK 1
 # define NB_FORK_PER_PHILO 2
 
-# define NOT_DED 0
+# define ONE_MS 1000
+
+# define TERMINATE 1
+
 # define DED 1
+# define NOT_DED 0
 
 # define DIES_MSG "is ded."
 # define EATS_MSG "is eating."
@@ -67,7 +71,7 @@ typedef struct s_args {
 
 typedef struct s_philo {
 	int				id;
-	int				state;
+	int				nb_of_meal;
 	long long		last_meal;
 	pthread_t		thread_id;
 	pthread_mutex_t	data_access;
@@ -85,6 +89,7 @@ typedef struct s_global {
 	long long		time_ref;
 	t_philo			*philos;
 	int				is_ded;
+	int				terminate;
 }				t_global;
 
 //_______________________________
@@ -115,13 +120,11 @@ void		*philo_in_a_thread(void *arg);
 //	Eat
 int			philo_eats_action(t_philo *philo);
 //	Sleep
-void		sleep_logic(int sleep_time);
 int			philo_sleeps_action(t_philo *philo, int time_to_sleep);
 //	Think
 void		philo_thinks_action(t_philo *philo);
-//	Deth
-void		deth_manager(	t_global *glo, int nb_of_philo_to_test, \
-							t_philo *philos);
+//	Termination
+void		termination_manager(t_global *glo);
 
 //_______________________________
 /*			LOG MANAGEMENT		*/
@@ -143,7 +146,7 @@ static inline t_philo	init_single_philo(	int index, int number_of_philo, \
 	t_philo	philosopher;
 
 	philosopher.id = index + 1;
-	philosopher.state = 0;
+	philosopher.nb_of_meal = 0;
 	philosopher.globvar = glo;
 	init_single_mutex(&philosopher.data_access);
 	philosopher.left_fork = &glo->forks[index];

@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 11:03:11 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/26 18:02:34 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/29 15:32:36 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	*philo_in_a_thread(void *arg)
 	synchroneous_start(philo);
 	if (philo->id % 2 == 0)
 		usleep(1000);
-	while (!glo->is_ded)
+	while (!glo->terminate)
 	{
-		if (philo_eats_action(philo) == DED)
+		if (philo_eats_action(philo) == TERMINATE)
 			break ;
-		if (philo_sleeps_action(philo, time_to_sleep) == DED)
+		if (philo_sleeps_action(philo, time_to_sleep) == TERMINATE)
 			break ;
-		if (glo->is_ded)
+		if (glo->terminate)
 			break ;
 		philo_thinks_action(philo);
 	}

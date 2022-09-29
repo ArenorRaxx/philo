@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:40:14 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 15:15:27 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/29 14:50:57 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	main(int argc, char **argv)
 	i = 0;
 	if (launch_philo_project(&glo, argc, argv) != SUCCESS)
 		return (-1);
-	while (glo.is_ded == NOT_DED)
-		deth_manager(&glo, glo.args.nb_philosophers, glo.philos);
+	while (glo.terminate == 0)
+		termination_manager(&glo);
 	while (i < glo.args.nb_philosophers)
 		pthread_join(glo.philos[i++].thread_id, NULL);
 	free_forks(&glo.forks);

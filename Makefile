@@ -6,7 +6,7 @@
 #    By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/12 08:34:12 by mcorso            #+#    #+#              #
-#    Updated: 2022/09/22 15:16:03 by mcorso           ###   ########.fr        #
+#    Updated: 2022/09/29 15:18:58 by mcorso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME			=	philo
 
 #	Source files
 SRC_FILES		=	args_manager.c \
-					deth_manager.c \
 					error.c \
 					fork_manager.c \
 					log_manager.c \
@@ -25,7 +24,8 @@ SRC_FILES		=	args_manager.c \
 					philo_thinks_action.c\
 					philo_thread_loop.c \
 					philo.c \
-					start_manager.c
+					start_manager.c \
+					termination_manager.c
 
 SRCS			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJS			=	$(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))

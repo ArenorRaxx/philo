@@ -58,7 +58,7 @@ static int	create_and_synchro_lock_threads(int nb_of_philos, \
 }
 
 static int	unlock_synchro_threads(	int nb_of_philos, pthread_mutex_t **start, \
-									t_philo **philos)
+									t_philo **philos, long long time_ref)
 {
 	int	i;
 	int	errnum;
@@ -66,7 +66,7 @@ static int	unlock_synchro_threads(	int nb_of_philos, pthread_mutex_t **start, \
 	i = 0;
 	while (i < nb_of_philos)
 	{
-		(*philos)[i].last_meal = get_timestamp();
+		(*philos)[i].last_meal = time_ref;
 		errnum = pthread_mutex_unlock(&(*start)[i]);
 		if (errnum != SUCCESS)
 			return (errnum);
@@ -89,7 +89,8 @@ static int	catch_synchroneous_thread_creation_error(t_global *glo)
 	if (errnum != SUCCESS)
 		return (errnum);
 	glo->time_ref = get_timestamp();
-	errnum = unlock_synchro_threads(nb_of_philos, &start, &philos);
+	errnum = \
+		unlock_synchro_threads(nb_of_philos, &start, &philos, glo->time_ref);
 	return (errnum);
 }
 

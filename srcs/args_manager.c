@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:32:50 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/26 17:35:12 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/29 14:35:58 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static int	fill_glo_variable(t_global *glo, int argc, char **argv)
 	if (errnum != SUCCESS)
 		return (errnum);
 	glo->is_ded = 0;
+	glo->terminate = 0;
 	return (SUCCESS);
 }
 

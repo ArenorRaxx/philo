@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   deth_manager.c                                     :+:      :+:    :+:   */
+/*   termination_manager.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:58:08 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/26 17:54:56 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/29 15:20:41 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+#include <unistd.h>
 
 static void	philo_dies_action(t_philo *philo)
 {
@@ -48,12 +49,44 @@ void	deth_manager(t_global *glo, int nb_of_philo_to_test, t_philo *philos)
 	philo_is_ded = check_for_ded_philo(current_philo, *glo);
 	if (philo_is_ded == DED)
 	{
-		glo->is_ded = 1;
+		glo->terminate = 1;
 		philo_dies_action(&current_philo);
 	}
 	if (++i == nb_of_philo_to_test)
 	{
 		i = 0;
-		sleep_logic(8);
+		usleep(4 * ONE_MS);
 	}
+}
+
+static void	ration_manager(	t_global *glo, int nb_of_philo_to_test, \
+							t_philo *philos)
+{
+	int			nb_of_meal_to_have;
+	static int	i = 0;
+	static int	has_philosopher_i_enough_meal[200];
+
+	nb_of_meal_to_have = glo->args.nb_time_eats;
+	if (philos[i].nb_of_meal >= nb_of_meal_to_have)
+		has_philosopher_i_enough_meal[i] = 1;
+	if (++i == nb_of_philo_to_test)
+	{
+		while (--i >= 0 && has_philosopher_i_enough_meal[i] == 1)
+			if (i == 0)
+				glo->terminate = 1;
+		i = 0;
+		usleep(4 * ONE_MS);
+	}
+}
+
+void	termination_manager(t_global *glo)
+{
+	int		nb_of_philo;
+	t_philo	*philos;
+
+	philos = glo->philos;
+	nb_of_philo = glo->args.nb_philosophers;
+	if (glo->args.nb_time_eats >= 0)
+		ration_manager(glo, nb_of_philo, philos);
+	deth_manager(glo, nb_of_philo, philos);
 }

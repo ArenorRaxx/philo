@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/26 18:01:13 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/29 15:36:57 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,17 @@ static int	philo_takes_forks_action(t_philo *philo)
 		errnum = pthread_mutex_lock(forks[i]);
 		if (errnum != SUCCESS)
 			return (errnum);
-		if (philo->globvar->is_ded == DED)
+		if (philo->globvar->terminate == TERMINATE)
 		{
 			pthread_mutex_unlock(forks[0]);
 			if (i == 1)
 				pthread_mutex_unlock(forks[1]);
-			return (DED);
+			return (TERMINATE);
 		}
-		print_action_log(philo, TAKES_FORK_MSG);
 		i++;
 	}
+	while (i-- >= 0)
+		print_action_log(philo, TAKES_FORK_MSG);
 	return (SUCCESS);
 }
 
@@ -79,20 +80,22 @@ int	philo_eats_action(t_philo *philo)
 	const t_global	*glo = philo->globvar;
 	const int		time_to_eat = glo->args.time_to_eat;
 
-	philo->state = 1;
 	errnum = philo_takes_forks_action(philo);
 	if (errnum != SUCCESS)
 		return (errnum);
-	if (glo->is_ded == DED)
+	if (glo->terminate == TERMINATE)
 	{
 		philo_drops_forks(philo);
-		return (DED);
+		return (TERMINATE);
 	}
 	print_action_log(philo, EATS_MSG);
 	errnum = update_philo_last_meal(philo);
 	if (errnum != SUCCESS)
 		return (errnum);
-	sleep_logic(time_to_eat);
+	usleep(time_to_eat * ONE_MS);
+	philo->nb_of_meal++;
 	errnum = philo_drops_forks(philo);
+	if (philo->nb_of_meal == philo->globvar->args.nb_time_eats)
+		return (TERMINATE);
 	return (errnum);
 }

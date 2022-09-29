@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 14:58:15 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 15:25:13 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/09/29 15:24:00 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	malloc_start(pthread_mutex_t **start, int nb_of_philo_to_start)
 	return (SUCCESS);
 }
 
-static int	init_mutex_of_start(pthread_mutex_t **start, int nb_of_philo_to_start)
+static int	init_mutex_of_start(pthread_mutex_t **start, \
+								int nb_of_philo_to_start)
 {
 	int	errnum;
 
