@@ -6,7 +6,7 @@
 #    By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/12 08:34:12 by mcorso            #+#    #+#              #
-#    Updated: 2022/09/29 15:18:58 by mcorso           ###   ########.fr        #
+#    Updated: 2022/10/04 14:05:46 by mcorso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,6 @@ SRC_FILES		=	args_manager.c \
 					philo_eats_action.c \
 					philo_manager.c \
 					philo_sleeps_action.c \
-					philo_thinks_action.c\
 					philo_thread_loop.c \
 					philo.c \
 					start_manager.c \

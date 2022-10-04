@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/29 15:20:05 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/04 14:46:20 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,12 @@ int			init_start_objects(	pthread_mutex_t **start, \
 //_______________________________
 /*			PHILOS MANAGEMENT	*/
 /////////////////////////////////
-int			philo_manager(t_global *glo);
+//	Thread Loop
 void		*philo_in_a_thread(void *arg);
 //	Eat
-int			philo_eats_action(t_philo *philo);
+void		philo_eats_action(t_philo *philo, const int time_to_eat);
 //	Sleep
-int			philo_sleeps_action(t_philo *philo, int time_to_sleep);
-//	Think
-void		philo_thinks_action(t_philo *philo);
+void		philo_sleeps_action(t_philo *philo, const int time_to_sleep);
 //	Termination
 void		termination_manager(t_global *glo);
 

@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 19:45:04 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/07 12:05:51 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/04 14:22:54 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,4 @@ void	print_action_log(t_philo *philo, char *action)
 	pthread_mutex_lock(&write);
 	printf("%lli %i %s\n", delta_time_since_start, philo_id, action);
 	pthread_mutex_unlock(&write);
-	return ;
 }

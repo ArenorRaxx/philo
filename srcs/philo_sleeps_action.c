@@ -15,11 +15,8 @@
 #include <pthread.h>
 #include <unistd.h>
 
-int	philo_sleeps_action(t_philo *philo, int time_to_sleep)
+void	philo_sleeps_action(t_philo *philo, const int time_to_sleep)
 {
-	if (philo->globvar->terminate == TERMINATE)
-		return (TERMINATE);
 	print_action_log(philo, SLEEPS_MSG);
 	usleep(time_to_sleep * ONE_MS);
-	return (philo->globvar->terminate);
 }
