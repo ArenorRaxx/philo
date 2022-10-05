@@ -34,33 +34,26 @@ static int	init_global_philo(t_global *glo)
 	return (SUCCESS);
 }
 
-static void	create_and_synchro_lock_threads(int nb_of_philos, \
-											t_philo **philos, \
-											pthread_mutex_t **start)
+static void	create_philo_threads(int nb_of_philos, t_philo **philos)
 {
 	int	i;
 
 	i = 0;
 	while (i < nb_of_philos)
 	{
-		pthread_mutex_lock(&(*start)[i]);
 		pthread_create(&(*philos)[i].thread_id, NULL, \
 								philo_in_a_thread, &(*philos)[i]);
 		i++;
 	}
 }
 
-static void	unlock_synchro_threads(	int nb_of_philos, pthread_mutex_t **start, \
-									t_philo **philos, long long time_ref)
+static void	synchro_philo_last_meal_timestamp(int nb_of_philos, t_philo **philos, long long time_ref)
 {
 	int	i;
 
 	i = 0;
 	while (i < nb_of_philos)
-	{
-		(*philos)[i].last_meal = time_ref;
-		pthread_mutex_unlock(&(*start)[i++]);
-	}
+		(*philos)[i++].last_meal = time_ref;
 }
 
 static void	catch_synchroneous_thread_creation_error(t_global *glo)
@@ -71,10 +64,12 @@ static void	catch_synchroneous_thread_creation_error(t_global *glo)
 
 	nb_of_philos = glo->args.nb_philosophers;
 	philos = glo->philos;
-	start = glo->start;
-	create_and_synchro_lock_threads(nb_of_philos, &philos, &start);
+	start = &glo->start;
+	pthread_mutex_lock(start);
+	create_philo_threads(nb_of_philos, &philos);
 	glo->time_ref = get_timestamp();
-	unlock_synchro_threads(nb_of_philos, &start, &philos, glo->time_ref);
+	synchro_philo_last_meal_timestamp(nb_of_philos, &philos, glo->time_ref);
+	pthread_mutex_unlock(start);
 }
 
 int	catch_philo_init_and_threading_error(t_global *glo)

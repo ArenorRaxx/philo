@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:40:14 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/29 14:50:57 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:08:14 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int argc, char **argv)
 	while (i < glo.args.nb_philosophers)
 		pthread_join(glo.philos[i++].thread_id, NULL);
 	free_forks(&glo.forks);
-	free_start(&glo.start);
 	free(glo.philos);
 	return (SUCCESS);
 }

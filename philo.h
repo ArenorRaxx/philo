@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/04 14:46:20 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:06:06 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef struct s_philo {
 	long long		last_meal;
 	pthread_t		thread_id;
 	pthread_mutex_t	data_access;
-	pthread_mutex_t	*start;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	struct s_global	*globvar;
@@ -84,8 +83,8 @@ typedef struct s_philo {
 typedef struct s_global {
 	struct s_args	args;
 	pthread_mutex_t	write;
+	pthread_mutex_t	start;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	*start;
 	long long		time_ref;
 	t_philo			*philos;
 	int				is_ded;
@@ -107,10 +106,6 @@ int			init_mutex_objects_of_glo(t_global *glo);
 //	Forks
 int			init_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
 void		free_forks(pthread_mutex_t **forks);
-//	Staters
-void		free_start(pthread_mutex_t **start);
-int			init_start_objects(	pthread_mutex_t **start, \
-								int nb_of_philo_to_start);
 
 //_______________________________
 /*			PHILOS MANAGEMENT	*/
@@ -152,7 +147,6 @@ static inline t_philo	init_single_philo(	int index, int number_of_philo, \
 		philosopher.right_fork = &glo->forks[0];
 	else
 		philosopher.right_fork = &glo->forks[index + 1];
-	philosopher.start = &glo->start[index];
 	return (philosopher);
 }
 
