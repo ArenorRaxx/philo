@@ -28,7 +28,11 @@ static int	init_global_philo(t_global *glo)
 		return (ENOMEM);
 	while (i < number_of_philo)
 	{
-		current_init_philo = init_single_philo(i, number_of_philo, glo);
+		if (i % 2)
+			current_init_philo = init_single_odd_philo(i, number_of_philo, glo);
+		else
+			current_init_philo = \
+			init_single_even_philo(i, number_of_philo, glo);
 		glo->philos[i++] = current_init_philo;
 	}
 	return (SUCCESS);
@@ -47,7 +51,9 @@ static void	create_philo_threads(int nb_of_philos, t_philo **philos)
 	}
 }
 
-static void	synchro_philo_last_meal_timestamp(int nb_of_philos, t_philo **philos, long long time_ref)
+static void	synchro_philo_last_meal_timestamp(int nb_of_philos, \
+												t_philo **philos, \
+												long long time_ref)
 {
 	int	i;
 

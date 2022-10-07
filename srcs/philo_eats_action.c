@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/04 15:01:01 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/07 12:24:23 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,11 @@ static void	philo_takes_forks_action(t_philo *philo)
 	pthread_mutex_t	*forks[NB_FORK_PER_PHILO];
 
 	i = 0;
-	forks[LEFT_FORK] = philo->left_fork;
-	forks[RIGHT_FORK] = philo->right_fork;
+	forks[FIRST_FORK] = philo->first_fork;
+	forks[SECOND_FORK] = philo->second_fork;
 	while (i < NB_FORK_PER_PHILO)
 	{
 		pthread_mutex_lock(forks[i++]);
-		// if (philo->globvar->terminate)
-		// {
-			// while (--i >= 0)
-				// pthread_mutex_unlock(forks[i]);
-			// return ;
-		// }
 		if (!philo->globvar->terminate)
 			print_action_log(philo, TAKES_FORK_MSG);
 	}
@@ -51,8 +45,8 @@ static void	philo_drops_forks(t_philo *philo)
 	pthread_mutex_t	*forks[NB_FORK_PER_PHILO];
 
 	i = 0;
-	forks[LEFT_FORK] = philo->left_fork;
-	forks[RIGHT_FORK] = philo->right_fork;
+	forks[FIRST_FORK] = philo->first_fork;
+	forks[SECOND_FORK] = philo->second_fork;
 	while (i < NB_FORK_PER_PHILO)
 		pthread_mutex_unlock(forks[i++]);
 }

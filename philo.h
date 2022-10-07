@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/05 14:06:06 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/07 12:37:41 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # define ENOMEM	12
 # define EINVAL 22
 
-# define LEFT_FORK 0
-# define RIGHT_FORK 1
+# define FIRST_FORK 0
+# define SECOND_FORK 1
 # define NB_FORK_PER_PHILO 2
 
 # define ONE_MS 1000
@@ -75,8 +75,8 @@ typedef struct s_philo {
 	long long		last_meal;
 	pthread_t		thread_id;
 	pthread_mutex_t	data_access;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
 	struct s_global	*globvar;
 }				t_philo;
 
@@ -132,8 +132,7 @@ long long	time_diff(long long t1, long long t2);
 /////////////////////////////////
 int			print_error_and_return(int errnum);
 
-
-static inline t_philo	init_single_philo(	int index, int number_of_philo, \
+static inline t_philo	init_single_odd_philo(	int index, int number_of_philo, \
 											t_global *glo)
 {
 	t_philo	philosopher;
@@ -142,11 +141,26 @@ static inline t_philo	init_single_philo(	int index, int number_of_philo, \
 	philosopher.nb_of_meal = 0;
 	philosopher.globvar = glo;
 	init_single_mutex(&philosopher.data_access);
-	philosopher.left_fork = &glo->forks[index];
-	if (index == number_of_philo - 1)
-		philosopher.right_fork = &glo->forks[0];
-	else
-		philosopher.right_fork = &glo->forks[index + 1];
+	philosopher.first_fork = &glo->forks[index];
+	philosopher.second_fork = &glo->forks[index + 1];
+	if (philosopher.id == number_of_philo)
+		philosopher.second_fork = &glo->forks[0];
+	return (philosopher);
+}
+
+static inline t_philo	init_single_even_philo(	int index, int number_of_philo, \
+											t_global *glo)
+{
+	t_philo	philosopher;
+
+	philosopher.id = index + 1;
+	philosopher.nb_of_meal = 0;
+	philosopher.globvar = glo;
+	init_single_mutex(&philosopher.data_access);
+	philosopher.first_fork = &glo->forks[index + 1];
+	philosopher.second_fork = &glo->forks[index];
+	if (philosopher.id == number_of_philo)
+		philosopher.first_fork = &glo->forks[0];
 	return (philosopher);
 }
 
