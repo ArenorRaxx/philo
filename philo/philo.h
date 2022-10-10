@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/07 12:37:41 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/10 19:12:36 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PHILO_H
 
 # define PARSING_ERROR_MSG "Parsing error: "
-# define ENAN_MSG "Negative or not a number."
+# define ENAN_MSG "Argument is negative, null or not a number."
 # define EMAXINT_MSG "Equal or greater to max int."
 # define EINBARG_MSG "Invalid number of argument."
 # define EAGAIN_MSG "Not enough ressources (probably from pthread_create)."

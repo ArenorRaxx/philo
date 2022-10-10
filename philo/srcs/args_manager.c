@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 12:32:50 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/29 14:35:58 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/10 19:11:04 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	check_number(char *arg)
 	nb = 0;
 	while (arg[i])
 	{
-		if (arg[i] < '0' || arg[i] > '9')
+		if (arg[i] <= '0' || arg[i] > '9')
 			return (ENAN);
 		nb *= 10;
 		curr_nb = arg[i] - '0';
