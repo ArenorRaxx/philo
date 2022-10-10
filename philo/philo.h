@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/10 19:12:36 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/10 19:35:45 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,13 @@ static inline t_philo	init_single_even_philo(	int index, int number_of_philo, \
 	if (philosopher.id == number_of_philo)
 		philosopher.first_fork = &glo->forks[0];
 	return (philosopher);
+}
+
+static inline void	print_end_by_ration(t_global *glo)
+{
+	pthread_mutex_lock(&glo->write);
+	printf("%lli philos have eaten enough.\n", get_timestamp() - glo->time_ref);
+	pthread_mutex_unlock(&glo->write);
 }
 
 #endif
