@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:58:08 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/10 19:33:18 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/10 20:15:07 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static void	ration_manager(	t_global *glo, int nb_of_philo_to_test, \
 		has_philosopher_i_enough_meal[philo_id]++;
 		nb_of_philo_that_ate_enough++;
 	}
-
 	if (nb_of_philo_that_ate_enough == nb_of_philo_to_test)
 	{
 		glo->terminate = 1;
