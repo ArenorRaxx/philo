@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/07 12:24:23 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/10 19:05:47 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 static void	update_philo_last_meal(t_philo *philo)
 {
-
 	pthread_mutex_lock(&philo->data_access);
 	philo->last_meal = get_timestamp();
 	pthread_mutex_unlock(&philo->data_access);

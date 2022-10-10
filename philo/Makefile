@@ -6,7 +6,7 @@
 #    By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/12 08:34:12 by mcorso            #+#    #+#              #
-#    Updated: 2022/10/05 14:09:31 by mcorso           ###   ########.fr        #
+#    Updated: 2022/10/05 14:09:31mcorso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ $(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
 					$(CC) $(CFLAGS) -I$(HEAD) -o $@ -c $<
 
 $(NAME)			:	$(OBJS)
-					$(CC) $(OBJS) -o $(NAME) $(INC_THREAD)
+					$(CC) $^ -o $@ $(INC_THREAD)
 
 clean			:	
 					rm -rf $(OBJ_DIR)
@@ -57,4 +57,4 @@ fclean			:	clean
 
 re				:	fclean all
 
-.PHONY			:	all obj $(NAME) clean fclean re
+.PHONY			:	all obj clean fclean re

@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:58:08 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/05 13:55:05 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/10 19:05:27 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	philo_dies_action(t_philo *philo)
 
 static int	check_for_ded_philo(t_philo philo, t_global glo)
 {
-	const long long	current_timestamp = get_timestamp() ;
+	const long long	current_timestamp = get_timestamp();
 	const int		time_to_die = glo.args.time_to_die;
 	long long		last_meal_timestamp;
 	long long		time_since_philo_ate;
