@@ -28,7 +28,7 @@ static int	init_global_philo(t_global *glo)
 		return (ENOMEM);
 	while (i < number_of_philo)
 	{
-		if (i % 2)
+		if (i % 2 == 0)
 			current_init_philo = init_single_odd_philo(i, number_of_philo, glo);
 		else
 			current_init_philo = \
