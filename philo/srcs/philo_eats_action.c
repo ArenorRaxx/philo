@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/10 19:05:47 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/10 19:49:02 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ void	philo_eats_action(t_philo *philo, const int time_to_eat)
 {
 	const t_global	*glo = philo->globvar;
 
+	if (glo->args.nb_philosophers == 1)
+	{
+		print_action_log(philo, TAKES_FORK_MSG);
+		while (glo->terminate != TERMINATE)
+			;
+		return;
+	}
 	philo_takes_forks_action(philo);
 	if (!glo->terminate)
 	{
