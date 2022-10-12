@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/10 19:35:45 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/12 11:33:21 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,23 +132,7 @@ long long	time_diff(long long t1, long long t2);
 /////////////////////////////////
 int			print_error_and_return(int errnum);
 
-static inline t_philo	init_single_odd_philo(	int index, int number_of_philo, \
-											t_global *glo)
-{
-	t_philo	philosopher;
-
-	philosopher.id = index + 1;
-	philosopher.nb_of_meal = 0;
-	philosopher.globvar = glo;
-	init_single_mutex(&philosopher.data_access);
-	philosopher.first_fork = &glo->forks[index];
-	philosopher.second_fork = &glo->forks[index + 1];
-	if (philosopher.id == number_of_philo)
-		philosopher.second_fork = &glo->forks[0];
-	return (philosopher);
-}
-
-static inline t_philo	init_single_even_philo(	int index, int number_of_philo, \
+static inline t_philo	init_single_philo(	int index, int number_of_philo, \
 											t_global *glo)
 {
 	t_philo	philosopher;
@@ -160,7 +144,10 @@ static inline t_philo	init_single_even_philo(	int index, int number_of_philo, \
 	philosopher.first_fork = &glo->forks[index + 1];
 	philosopher.second_fork = &glo->forks[index];
 	if (philosopher.id == number_of_philo)
-		philosopher.first_fork = &glo->forks[0];
+	{
+		philosopher.first_fork = &glo->forks[index];
+		philosopher.second_fork = &glo->forks[0];
+	}
 	return (philosopher);
 }
 

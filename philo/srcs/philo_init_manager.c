@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_manager.c                                    :+:      :+:    :+:   */
+/*   philo_init_manager.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 12:17:15 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/10 19:05:57 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/12 11:28:48 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ static int	init_global_philo(t_global *glo)
 		return (ENOMEM);
 	while (i < number_of_philo)
 	{
-		if (i % 2 == 0)
-			current_init_philo = init_single_odd_philo(i, number_of_philo, glo);
-		else
-			current_init_philo = \
-			init_single_even_philo(i, number_of_philo, glo);
+		current_init_philo = init_single_philo(i, number_of_philo, glo);
 		glo->philos[i++] = current_init_philo;
 	}
 	return (SUCCESS);
