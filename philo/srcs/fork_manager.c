@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 11:48:43 by mcorso            #+#    #+#             */
-/*   Updated: 2022/09/22 15:09:43 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/14 13:33:42 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,12 @@ int	init_fork_objects(pthread_mutex_t **forks, int nb_of_forks)
 		return (errnum);
 	errnum = init_mutex_of_forks(forks, nb_of_forks);
 	return (errnum);
+}
+
+void destroy_fork_objects(pthread_mutex_t **forks, int nb_of_forks)
+{
+	int	i;
+
+	while (i < nb_of_forks)
+		pthread_mutex_destroy(&(*forks)[i++]);
 }

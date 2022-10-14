@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:57:15 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/05 14:06:45 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/14 13:51:07 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	init_single_mutex(pthread_mutex_t *mutex)
 
 	errnum = pthread_mutex_init(mutex, NULL);
 	return (errnum);
+}
+
+static void destroy_single_mutex(pthread_mutex_t *mutex)
+{
+	pthread_mutex_destroy(mutex);
 }
 
 int	init_multiple_mutexes(int nb_of_mutexes, pthread_mutex_t **mutex_array)
@@ -59,5 +64,27 @@ int	init_mutex_objects_of_glo(t_global *glo)
 		return (errnum);
 	write = &glo->write;
 	errnum = init_single_mutex(write);
+	if (errnum != SUCCESS)
+		return (errnum);
+	init_single_mutex(&glo->data_access);
 	return (errnum);
+}
+
+void	destroy_mutex_objects_of_glo(t_global *glo)
+{
+	int				nb_of_philo;
+	pthread_mutex_t **forks;
+	pthread_mutex_t *start;
+	pthread_mutex_t *write;
+	pthread_mutex_t *data_access;
+
+	nb_of_philo = glo->args.nb_philosophers;
+	forks = &glo->forks;
+	destroy_fork_objects(forks, nb_of_philo);
+	start = &glo->start;
+	destroy_single_mutex(start);
+	write = &glo->write;
+	destroy_single_mutex(write);
+	data_access = &glo->data_access;
+	destroy_single_mutex(data_access);
 }

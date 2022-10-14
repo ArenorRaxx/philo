@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/12 11:33:21 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/14 14:16:45 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_global {
 	pthread_mutex_t	write;
 	pthread_mutex_t	start;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t data_access;
 	long long		time_ref;
 	t_philo			*philos;
 	int				is_ded;
@@ -103,9 +104,11 @@ int			init_single_mutex(pthread_mutex_t *mutex);
 int			init_multiple_mutexes(	int nb_of_mutexes, \
 									pthread_mutex_t **mutex_array);
 int			init_mutex_objects_of_glo(t_global *glo);
+void		destroy_mutex_objects_of_glo(t_global *glo);
 //	Forks
 int			init_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
 void		free_forks(pthread_mutex_t **forks);
+void 		destroy_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
 
 //_______________________________
 /*			PHILOS MANAGEMENT	*/

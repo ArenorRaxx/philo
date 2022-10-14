@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:40:14 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/05 14:08:14 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/14 14:16:48 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	main(int argc, char **argv)
 		termination_manager(&glo);
 	while (i < glo.args.nb_philosophers)
 		pthread_join(glo.philos[i++].thread_id, NULL);
+	destroy_mutex_objects_of_glo(&glo);
 	free_forks(&glo.forks);
 	free(glo.philos);
 	return (SUCCESS);

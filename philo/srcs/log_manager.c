@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 19:45:04 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/04 14:22:54 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/14 14:30:35 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <sys/time.h>
+
+static long long	read_time_ref(t_global *glo)
+{
+	long long		time_ref;
+
+	pthread_mutex_lock(&glo->data_access);
+	time_ref = glo->time_ref;
+	pthread_mutex_unlock(&glo->data_access);
+	return (time_ref);
+}
 
 long long	get_timestamp(void)
 {
@@ -32,15 +42,16 @@ long long	time_diff(long long t1, long long t2)
 
 void	print_action_log(t_philo *philo, char *action)
 {
-	const t_global	glo = *philo->globvar;
-	const int		philo_id = philo->id;
-	long long		delta_time_since_start;
-	long long		time_at_t;
-	pthread_mutex_t	write;
+	t_global				*glo;
+	pthread_mutex_t			write;
+	const int				philo_id = philo->id;
+	long long				delta_time_since_start;
+	long long				time_ref;
 
-	write = glo.write;
-	time_at_t = get_timestamp();
-	delta_time_since_start = time_diff(glo.time_ref, time_at_t);
+	glo = philo->globvar;
+	write = glo->write;
+	time_ref = read_time_ref(glo);
+	delta_time_since_start = time_diff(time_ref, get_timestamp());
 	pthread_mutex_lock(&write);
 	printf("%lli %i %s\n", delta_time_since_start, philo_id, action);
 	pthread_mutex_unlock(&write);
