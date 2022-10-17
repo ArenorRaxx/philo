@@ -6,35 +6,28 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:58:08 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/15 13:43:43 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/17 14:00:28 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 #include <unistd.h>
 
-static int	check_for_ded_philo(t_philo *philo, t_global glo)
+static void	deth_manager(	t_global *glo, int time_to_die, \
+							t_philo *current_philo)
 {
 	const long long	current_timestamp = get_timestamp();
-	const int		time_to_die = glo.args.time_to_die;
 	long long		last_meal_timestamp;
 	long long		time_since_philo_ate;
 
-	pthread_mutex_lock(&philo->data_access);
-	last_meal_timestamp = philo->last_meal;
-	pthread_mutex_unlock(&philo->data_access);
+	pthread_mutex_lock(&current_philo->data_access);
+	last_meal_timestamp = current_philo->last_meal;
 	time_since_philo_ate = time_diff(last_meal_timestamp, current_timestamp);
-	return (time_since_philo_ate > time_to_die);
-}
-
-static void	deth_manager(t_global *glo, t_philo *current_philo)
-{
-	int				philo_is_ded;
-
-	philo_is_ded = check_for_ded_philo(current_philo, *glo);
-	if (philo_is_ded == DED)
+	pthread_mutex_unlock(&current_philo->data_access);
+	if (time_since_philo_ate > time_to_die)
 		end_by_deth_action(current_philo->id, glo);
 }
+
 
 static void	ration_manager(	t_global *glo, int nb_of_philo_to_test, \
 							t_philo *current_philo)
@@ -58,15 +51,17 @@ static void	ration_manager(	t_global *glo, int nb_of_philo_to_test, \
 
 void	termination_manager(t_global *glo)
 {
+	int			time_to_die;
 	int			nb_of_philo;
 	t_philo		*current_philo;
 	static int	i = 0;
 
 	current_philo = &glo->philos[i];
+	time_to_die = glo->args.time_to_die;
 	nb_of_philo = glo->args.nb_philosophers;
 	if (glo->args.nb_time_eats >= 0)
 		ration_manager(glo, nb_of_philo, current_philo);
-	deth_manager(glo, current_philo);
+	deth_manager(glo, time_to_die, current_philo);
 	if (++i == nb_of_philo)
 		usleep(8 * ONE_MS);
 	i *= (i != nb_of_philo);
