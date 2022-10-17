@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 19:45:04 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/15 13:17:44 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/17 13:41:00 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,9 @@ void	print_action_log(int philo_id, t_global *glo, char *action)
 	long long	delta_time_since_start;
 	long long	time_ref;
 
-	pthread_mutex_lock(&glo->data_access);
-	if (glo->terminate == TERMINATE)
-	{
-		pthread_mutex_unlock(&glo->data_access);
+	if (get_terminate_var(glo) == TERMINATE)
 		return ;
-	}
+	pthread_mutex_lock(&glo->data_access);
 	time_ref = glo->time_ref;
 	delta_time_since_start = time_diff(time_ref, get_timestamp());
 	pthread_mutex_lock(&glo->write);
