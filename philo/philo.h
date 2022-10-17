@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/14 14:16:45 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/15 13:15:54 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@
 # define DED 1
 # define NOT_DED 0
 
-# define DIES_MSG "is ded."
 # define EATS_MSG "is eating."
 # define SLEEPS_MSG "is sleeping."
 # define THINKS_MSG "is thinking."
 # define TAKES_FORK_MSG "has taken a fork."
+//	END ACTION MSGS
+# define DIES_MSG "is ded."
+# define RATION_MSG "philos have eaten enough."
 
 # include <bits/types/struct_timeval.h>
 # include <stdio.h>
@@ -116,16 +118,16 @@ void 		destroy_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
 //	Thread Loop
 void		*philo_in_a_thread(void *arg);
 //	Eat
-void		philo_eats_action(t_philo *philo, const int time_to_eat);
+void		philo_eats_action(t_philo *philo, t_global *glo, int time_to_eat);
 //	Sleep
-void		philo_sleeps_action(t_philo *philo, const int time_to_sleep);
+void		philo_sleeps_action(int philo_id, t_global *glo, int time_to_sleep);
 //	Termination
 void		termination_manager(t_global *glo);
 
 //_______________________________
 /*			LOG MANAGEMENT		*/
 /////////////////////////////////
-void		print_action_log(t_philo *philo, char *action);
+void		print_action_log(int philo_id, t_global *glo, char *action);
 //	Time
 long long	get_timestamp(void);
 long long	time_diff(long long t1, long long t2);
@@ -154,11 +156,44 @@ static inline t_philo	init_single_philo(	int index, int number_of_philo, \
 	return (philosopher);
 }
 
-static inline void	print_end_by_ration(t_global *glo)
+static inline void	end_by_ration_action(t_global *glo)
 {
+	long long				delta_time_since_start;
+	long long				time_ref;
+
+	pthread_mutex_lock(&glo->data_access);
+	time_ref = glo->time_ref;
+	delta_time_since_start = time_diff(time_ref, get_timestamp());
 	pthread_mutex_lock(&glo->write);
-	printf("%lli philos have eaten enough.\n", get_timestamp() - glo->time_ref);
+	printf("%lli %s\n", delta_time_since_start, RATION_MSG);
 	pthread_mutex_unlock(&glo->write);
+	glo->terminate = 1;
+	pthread_mutex_unlock(&glo->data_access);
+}
+
+static inline void	end_by_deth_action(int philo_id, t_global *glo)
+{
+	long long				delta_time_since_start;
+	long long				time_ref;
+
+	pthread_mutex_lock(&glo->data_access);
+	time_ref = glo->time_ref;
+	delta_time_since_start = time_diff(time_ref, get_timestamp());
+	pthread_mutex_lock(&glo->write);
+	printf("%lli %i %s\n", delta_time_since_start, philo_id, DIES_MSG);
+	pthread_mutex_unlock(&glo->write);
+	glo->terminate = 1;
+	pthread_mutex_unlock(&glo->data_access);
+}
+
+static inline int	get_terminate_var(t_global *glo)
+{
+	int	ret_val;	
+
+	pthread_mutex_lock(&glo->data_access);
+	ret_val = glo->terminate;
+	pthread_mutex_unlock(&glo->data_access);
+	return (ret_val);
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 11:03:11 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/05 15:10:54 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/15 13:19:47 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,23 @@ void	*philo_in_a_thread(void *arg)
 {
 	t_philo		*philo;
 	t_global	*glo;
+	int			id;
 	int			time_to_eat;
 	int			time_to_sleep;
 
 	philo = (t_philo *)arg;
 	glo = philo->globvar;
+	id = philo->id;
 	time_to_eat = glo->args.time_to_eat;
 	time_to_sleep = glo->args.time_to_sleep;
 	synchroneous_start(&glo->start);
-	if (philo->id % 2 == 0)
+	if (id % 2 == 0)
 		usleep((time_to_eat * ONE_MS) / 2);
-	while (!glo->terminate)
+	while (get_terminate_var(glo) != TERMINATE)
 	{
-		if (!glo->terminate)
-			philo_eats_action(philo, time_to_eat);
-		if (!glo->terminate)
-			philo_sleeps_action(philo, time_to_sleep);
-		if (!glo->terminate)
-			print_action_log(philo, THINKS_MSG);
+		philo_eats_action(philo, glo, time_to_eat);
+		philo_sleeps_action(id, glo, time_to_sleep);
+		print_action_log(id, glo, THINKS_MSG);
 	}
 	return (NULL);
 }

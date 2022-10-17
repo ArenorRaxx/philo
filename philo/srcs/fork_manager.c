@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 11:48:43 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/14 13:33:42 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/15 13:27:53 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void destroy_fork_objects(pthread_mutex_t **forks, int nb_of_forks)
 {
 	int	i;
 
+	i = 0;
 	while (i < nb_of_forks)
 		pthread_mutex_destroy(&(*forks)[i++]);
 }

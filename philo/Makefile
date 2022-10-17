@@ -47,7 +47,7 @@ $(OBJ_DIR)%.o	:	$(SRC_DIR)%.c
 					$(CC) $(CFLAGS) -I$(HEAD) -o $@ -c $<
 
 $(NAME)			:	$(OBJS)
-					$(CC) $^ -o $@ $(INC_THREAD)
+					$(CC) $(CFLAGS) $^ -o $@ $(INC_THREAD)
 
 clean			:	
 					rm -rf $(OBJ_DIR)

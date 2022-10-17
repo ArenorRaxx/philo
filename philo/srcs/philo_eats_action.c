@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:09:59 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/10 20:15:16 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/15 13:35:00 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,14 @@ static void	update_philo_last_meal(t_philo *philo)
 	pthread_mutex_unlock(&philo->data_access);
 }
 
-static void	philo_takes_forks_action(t_philo *philo)
+static void	count_one_more_meal(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data_access);
+	philo->nb_of_meal++;
+	pthread_mutex_unlock(&philo->data_access);
+}
+
+static void	philo_takes_forks_action(t_philo *philo, t_global *glo)
 {
 	int				i;
 	pthread_mutex_t	*forks[NB_FORK_PER_PHILO];
@@ -33,8 +40,7 @@ static void	philo_takes_forks_action(t_philo *philo)
 	while (i < NB_FORK_PER_PHILO)
 	{
 		pthread_mutex_lock(forks[i++]);
-		if (!philo->globvar->terminate)
-			print_action_log(philo, TAKES_FORK_MSG);
+		print_action_log(philo->id, glo, TAKES_FORK_MSG);
 	}
 }
 
@@ -50,24 +56,21 @@ static void	philo_drops_forks(t_philo *philo)
 		pthread_mutex_unlock(forks[i++]);
 }
 
-void	philo_eats_action(t_philo *philo, const int time_to_eat)
+void	philo_eats_action(t_philo *philo, t_global *glo, int time_to_eat)
 {
-	const t_global	*glo = philo->globvar;
-
 	if (glo->args.nb_philosophers == 1)
 	{
-		print_action_log(philo, TAKES_FORK_MSG);
-		while (glo->terminate != TERMINATE)
-			;
+		print_action_log(philo->id, glo, TAKES_FORK_MSG);
+		usleep(glo->args.time_to_die * ONE_MS);
 		return ;
 	}
-	philo_takes_forks_action(philo);
-	if (!glo->terminate)
+	philo_takes_forks_action(philo, glo);
+	if (!get_terminate_var(glo))
 	{
-		print_action_log(philo, EATS_MSG);
+		print_action_log(philo->id, glo, EATS_MSG);
 		update_philo_last_meal(philo);
 		usleep(time_to_eat * ONE_MS);
-		philo->nb_of_meal++;
+		count_one_more_meal(philo);
 	}
 	philo_drops_forks(philo);
 }

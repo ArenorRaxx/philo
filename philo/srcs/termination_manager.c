@@ -6,17 +6,12 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:58:08 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/14 14:29:03 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/15 13:43:43 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 #include <unistd.h>
-
-static void	philo_dies_action(t_philo *philo)
-{
-	print_action_log(philo, DIES_MSG);
-}
 
 static int	check_for_ded_philo(t_philo *philo, t_global glo)
 {
@@ -38,10 +33,7 @@ static void	deth_manager(t_global *glo, t_philo *current_philo)
 
 	philo_is_ded = check_for_ded_philo(current_philo, *glo);
 	if (philo_is_ded == DED)
-	{
-		glo->terminate = 1;
-		philo_dies_action(current_philo);
-	}
+		end_by_deth_action(current_philo->id, glo);
 }
 
 static void	ration_manager(	t_global *glo, int nb_of_philo_to_test, \
@@ -61,10 +53,7 @@ static void	ration_manager(	t_global *glo, int nb_of_philo_to_test, \
 	}
 	pthread_mutex_unlock(&current_philo->data_access);
 	if (nb_of_philo_that_ate_enough == nb_of_philo_to_test)
-	{
-		glo->terminate = 1;
-		print_end_by_ration(glo);
-	}
+		end_by_ration_action(glo);
 }
 
 void	termination_manager(t_global *glo)
