@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:40:14 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/14 14:16:48 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/18 11:16:49 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ static int	launch_philo_project(t_global *glo, int argc, char **argv)
 	return (print_error_and_return(error));
 }
 
+static void	terminate_philo_project(t_global *glo)
+{
+	destroy_mutex_objects_of_glo(glo);
+	free(glo->philos);
+	free(glo->forks);
+}
+
 int	main(int argc, char **argv)
 {
 	int				i;
@@ -39,8 +46,6 @@ int	main(int argc, char **argv)
 		termination_manager(&glo);
 	while (i < glo.args.nb_philosophers)
 		pthread_join(glo.philos[i++].thread_id, NULL);
-	destroy_mutex_objects_of_glo(&glo);
-	free_forks(&glo.forks);
-	free(glo.philos);
+	terminate_philo_project(&glo);
 	return (SUCCESS);
 }
