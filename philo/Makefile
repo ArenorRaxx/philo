@@ -21,6 +21,7 @@ SRC_FILES		=	args_manager.c \
 					philo_eats_action.c \
 					philo_init_manager.c \
 					philo_sleeps_action.c \
+					philo_thinks_action.c \
 					philo_thread_loop.c \
 					philo.c \
 					termination_manager.c

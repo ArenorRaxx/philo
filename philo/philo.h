@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/15 13:15:54 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/17 16:29:44 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ void		*philo_in_a_thread(void *arg);
 void		philo_eats_action(t_philo *philo, t_global *glo, int time_to_eat);
 //	Sleep
 void		philo_sleeps_action(int philo_id, t_global *glo, int time_to_sleep);
+//	Think
+void	philo_thinks_action(int philo_id, t_global *glo);
 //	Termination
 void		termination_manager(t_global *glo);
 

@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 11:03:11 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/15 13:19:47 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/18 11:00:49 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*philo_in_a_thread(void *arg)
 	{
 		philo_eats_action(philo, glo, time_to_eat);
 		philo_sleeps_action(id, glo, time_to_sleep);
-		print_action_log(id, glo, THINKS_MSG);
+		philo_thinks_action(id, glo);
 	}
 	return (NULL);
 }

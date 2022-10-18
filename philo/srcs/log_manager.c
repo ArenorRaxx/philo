@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 19:45:04 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/17 13:41:00 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/17 16:31:52 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ long long	time_diff(long long t1, long long t2)
 
 void	print_action_log(int philo_id, t_global *glo, char *action)
 {
+	long long	current_time;
 	long long	delta_time_since_start;
 	long long	time_ref;
 
+	current_time = get_timestamp();
 	if (get_terminate_var(glo) == TERMINATE)
 		return ;
 	pthread_mutex_lock(&glo->data_access);
 	time_ref = glo->time_ref;
-	delta_time_since_start = time_diff(time_ref, get_timestamp());
+	delta_time_since_start = time_diff(time_ref, current_time);
 	pthread_mutex_lock(&glo->write);
 	printf("%lli %i %s\n", delta_time_since_start, philo_id, action);
 	pthread_mutex_unlock(&glo->write);
