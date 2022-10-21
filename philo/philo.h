@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 10:34:41 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/17 16:29:44 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/21 09:20:08 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_global {
 	pthread_mutex_t	write;
 	pthread_mutex_t	start;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t data_access;
+	pthread_mutex_t	data_access;
 	long long		time_ref;
 	t_philo			*philos;
 	int				is_ded;
@@ -110,7 +110,7 @@ void		destroy_mutex_objects_of_glo(t_global *glo);
 //	Forks
 int			init_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
 void		free_forks(pthread_mutex_t **forks);
-void 		destroy_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
+void		destroy_fork_objects(pthread_mutex_t **forks, int nb_of_forks);
 
 //_______________________________
 /*			PHILOS MANAGEMENT	*/
@@ -122,7 +122,7 @@ void		philo_eats_action(t_philo *philo, t_global *glo, int time_to_eat);
 //	Sleep
 void		philo_sleeps_action(int philo_id, t_global *glo, int time_to_sleep);
 //	Think
-void	philo_thinks_action(int philo_id, t_global *glo);
+void		philo_thinks_action(int philo_id, t_global *glo);
 //	Termination
 void		termination_manager(t_global *glo);
 

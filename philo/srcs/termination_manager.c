@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 15:58:08 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/17 14:00:28 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/21 09:21:16 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	deth_manager(	t_global *glo, int time_to_die, \
 	if (time_since_philo_ate > time_to_die)
 		end_by_deth_action(current_philo->id, glo);
 }
-
 
 static void	ration_manager(	t_global *glo, int nb_of_philo_to_test, \
 							t_philo *current_philo)

@@ -6,7 +6,7 @@
 /*   By: mcorso <mcorso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:57:15 by mcorso            #+#    #+#             */
-/*   Updated: 2022/10/14 13:51:07 by mcorso           ###   ########.fr       */
+/*   Updated: 2022/10/21 09:20:40 by mcorso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	init_single_mutex(pthread_mutex_t *mutex)
 	return (errnum);
 }
 
-static void destroy_single_mutex(pthread_mutex_t *mutex)
+static void	destroy_single_mutex(pthread_mutex_t *mutex)
 {
 	pthread_mutex_destroy(mutex);
 }
@@ -73,10 +73,10 @@ int	init_mutex_objects_of_glo(t_global *glo)
 void	destroy_mutex_objects_of_glo(t_global *glo)
 {
 	int				nb_of_philo;
-	pthread_mutex_t **forks;
-	pthread_mutex_t *start;
-	pthread_mutex_t *write;
-	pthread_mutex_t *data_access;
+	pthread_mutex_t	**forks;
+	pthread_mutex_t	*start;
+	pthread_mutex_t	*write;
+	pthread_mutex_t	*data_access;
 
 	nb_of_philo = glo->args.nb_philosophers;
 	forks = &glo->forks;
